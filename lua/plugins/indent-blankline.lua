@@ -1,17 +1,21 @@
 return {
 	"lukas-reineke/indent-blankline.nvim",
+	main = "ibl",
 	config = function()
-		local blankline = require("indent_blankline")
+		local ibl = require("ibl")
 
-		vim.opt.list = true
-		vim.opt.listchars:append("space:⋅") -- space symbol
-		-- vim.opt.listchars:append("eol:↴") -- end of the line symbol
+		-- local highlight = {
+		-- 	"CursorColumn",
+		-- 	"Whitespace",
+		-- }
+		ibl.setup({
 
-		blankline.setup({
-			show_current_context = true,
-			show_current_context_start = true,
-			-- show_end_of_line = false,
-			space_char_blankline = " ",
+			whitespace = {
+				-- highlight = highlight,
+				remove_blankline_trail = true,
+			},
+
+			scope = { enabled = true },
 		})
 	end,
 }
