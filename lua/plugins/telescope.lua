@@ -1,11 +1,14 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	cmd = "Telescope",
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 	},
+
+
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
@@ -34,6 +37,7 @@ return {
 		local keymap = vim.keymap
 		local builtin = require("telescope.builtin")
 
+		keymap.set("n", "<leader>ba", builtin.buffers, { desc = "Switch buffers" })
 		keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Files in cwd" })
 		keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
 		keymap.set("n", "<leader>fs", builtin.current_buffer_fuzzy_find, { desc = "String in buffer" })
