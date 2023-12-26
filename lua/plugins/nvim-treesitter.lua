@@ -60,11 +60,6 @@ return {
 						node_decremental = "<bs>",
 					},
 				},
-				-- enable nvim-ts-context-commentstring plugin for commenting tsx and jsx
-				context_commentstring = {
-					enable = true,
-					enable_autocmd = false,
-				},
 				-- auto install above language parsers
 				auto_install = true,
 			})
@@ -126,8 +121,12 @@ return {
 	-- Show context of the current function
 	{
 		"nvim-treesitter/nvim-treesitter-context",
-		enabled = true,
+		enabled = false,
 		opts = { mode = "cursor" },
+		config = function()
+			local keymap = vim.keymap
+			keymap.set("n", "<leader>uc", "<cmd>TSContextToggle<CR>", { desc = "Toggle context" })
+		end,
 	},
 
 	-- Automatically add closing tags for HTML and JSX

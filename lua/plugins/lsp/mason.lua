@@ -46,7 +46,7 @@ return {
 		mason_tool_installer.setup({
 			-- list of formatters and linterns for mason to install
 			ensure_installed = {
-				"prettier",
+				"prettierd",
 				"stylua",
 				"eslint_d",
 			},

@@ -39,6 +39,8 @@ return {
 
 		keymap.set("n", "<leader>ba", builtin.buffers, { desc = "Switch buffers" })
 		keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Files in cwd" })
+		keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Files in cwd" })
+		keymap.set("n", "<leader>.", builtin.find_files, { desc = "Files in cwd" })
 		keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
 		keymap.set("n", "<leader>fs", builtin.current_buffer_fuzzy_find, { desc = "String in buffer" })
 		keymap.set("n", "<leader>fS", builtin.live_grep, { desc = "String in cwd" })
