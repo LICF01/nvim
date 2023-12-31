@@ -19,7 +19,7 @@ return {
 		highlights = {
 			fill = {
 				fg = "#EC5F67",
-				bg = "#21242B",
+				bg = "#16161E",
 			},
 			indicator_selected = {
 				fg = "#EC5F67",
