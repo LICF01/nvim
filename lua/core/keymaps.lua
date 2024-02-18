@@ -38,6 +38,7 @@ keymap.set("n", "<leader>bP", "<cmd>BufferLineMovePrev<cr>", { desc = "Next to p
 keymap.set("n", "<leader>bcl", "<cmd>BufferLineCloseLeft<cr>", { desc = "Close all left" })
 keymap.set("n", "<leader>bcr", "<cmd>BufferLineCloseRight<cr>", { desc = "Close all right" })
 keymap.set("n", "<leader>bca", "<cmd>BufferLineCloseOthers<cr>", { desc = "Close all but current" })
+keymap.set("n", "<leader>bcp", "<cmd>BufferLinePickClose<cr>", { desc = "Pick and close" })
 keymap.set("n", "<leader>bf", "<cmd>BufferLinePick<cr>", { desc = "Pick" })
 keymap.set("n", "<leader>bF", "<cmd>BufferLinePickClose<cr>", { desc = "Pick and close" })
 keymap.set("n", "<leader>bP", "<cmd>BufferLineTogglePin<cr>", { desc = "Pin current" })

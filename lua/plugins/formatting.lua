@@ -13,9 +13,9 @@ return {
 					null_ls.builtins.formatting.prettierd.with({
 						extra_filetypes = { "astro" },
 					}),
-					null_ls.builtins.diagnostics.eslint.with({
-						extra_filetypes = { "astro" },
-					}),
+					-- null_ls.builtins.diagnostics.eslint.with({
+					-- 	extra_filetypes = { "astro" },
+					-- }),
 					null_ls.builtins.completion.spell,
 				},
 				on_attach = function(current_client, bufnr)
