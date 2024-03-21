@@ -8,7 +8,6 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 
-
 	config = function()
 		local telescope = require("telescope")
 		local actions = require("telescope.actions")
@@ -51,10 +50,10 @@ return {
 		keymap.set("n", "<leader>fv", builtin.vim_options, { desc = "Vim option" })
 		keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Keymap" })
 		keymap.set("n", "<leader>fl", builtin.highlights, { desc = "Available highlights" })
-		keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Commits" })
-		keymap.set("n", "<leader>gC", builtin.git_bcommits, { desc = "Buffer's commits" })
-		keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Branches" })
-		keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Status" })
-		keymap.set("n", "<leader>gS", builtin.git_stash, { desc = "Stash" })
+		keymap.set("n", "<leader>fgc", builtin.git_commits, { desc = "Commits" })
+		keymap.set("n", "<leader>fgC", builtin.git_bcommits, { desc = "Buffer's commits" })
+		keymap.set("n", "<leader>fgb", builtin.git_branches, { desc = "Branches" })
+		keymap.set("n", "<leader>fgs", builtin.git_status, { desc = "Status" })
+		keymap.set("n", "<leader>fgS", builtin.git_stash, { desc = "Stash" })
 	end,
 }
