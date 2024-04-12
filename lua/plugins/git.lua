@@ -4,11 +4,37 @@ return {
 		dependencies = {
 			"nvim-lua/plenary.nvim", -- required
 			"sindrets/diffview.nvim", -- optional - Diff integration
-
 			-- Only one of these is needed, not both.
 			"nvim-telescope/telescope.nvim",
 		},
 		config = true,
+		keys = {
+			{
+				"<leader>tn",
+				"<cmd>Neogit<CR>",
+				desc = "Neogit",
+			},
+			{
+				"<leader>cgon",
+				"<cmd>Neogit<CR>",
+				desc = "Neogit",
+			},
+		},
+	},
+	{
+		"sindrets/diffview.nvim",
+		keys = {
+			{
+				"<leader>td",
+				"<cmd>DiffviewOpen<CR>",
+				desc = "Open Diffview",
+			},
+			{
+				"<leader>cgod",
+				"<cmd>DiffviewOpen<CR>",
+				desc = "Open Diffview",
+			},
+		},
 	},
 	{
 		"lewis6991/gitsigns.nvim",
@@ -48,29 +74,31 @@ return {
 					end, { expr = true, desc = "previous hunk" })
 
 					-- Actions
-					map("n", "<leader>cghs", gs.stage_hunk, { desc = "stage" })
-					map("n", "<leader>cghr", gs.reset_hunk, { desc = "reset" })
-					map("v", "<leader>cghs", function()
+					map("n", "<leader>cgsh", gs.stage_hunk, { desc = "stage" })
+					map("n", "<leader>cgrh", gs.reset_hunk, { desc = "reset" })
+					map("v", "<leader>cgsh", function()
 						gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 					end, { desc = "stage" })
-					map("v", "<leader>cghr", function()
+					map("v", "<leader>cgrh", function()
 						gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 					end, { desc = "reset" })
-					map("n", "<leader>cgS", gs.stage_buffer, { desc = "stage buffer" })
-					map("n", "<leader>cgu", gs.undo_stage_hunk, { desc = "undo stage" })
-					map("n", "<leader>cgR", gs.reset_buffer, { desc = "reset buffer" })
-					map("n", "<leader>cghp", gs.preview_hunk, { desc = "preview hunk" })
-					map("n", "<leader>cgb", function()
+					map("n", "<leader>cgsb", gs.stage_buffer, { desc = "stage buffer" })
+					map("n", "<leader>cgus", gs.undo_stage_hunk, { desc = "undo stage" })
+					map("n", "<leader>cgrb", gs.reset_buffer, { desc = "reset buffer" })
+					map("n", "<leader>cgph", gs.preview_hunk, { desc = "preview hunk" })
+					map("n", "<leader>cgbl", function()
 						gs.blame_line({ full = true })
 					end, { desc = "blame line" })
-					map("n", "<leader>cgd", gs.diffthis, { desc = "diff" })
-					map("n", "<leader>cgD", function()
+					map("n", "<leader>cgdf", gs.diffthis, { desc = "Diff file" })
+					map("n", "<leader>cgdF", function()
 						gs.diffthis("~")
 					end)
 					map("n", "<leader>cgud", gs.toggle_deleted, { desc = "toggle deleted" })
 					map("n", "<leader>cgub", gs.toggle_current_line_blame, { desc = "toggle line blame" })
-					map("n", "<leader>ugd", gs.toggle_deleted, { desc = "toggle deleted" })
-					map("n", "<leader>ugb", gs.toggle_current_line_blame, { desc = "toggle line blame" })
+					map("n", "<leader>cgtd", gs.toggle_deleted, { desc = "toggle deleted" })
+					map("n", "<leader>cgtl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
+					map("n", "<leader>utd", gs.toggle_deleted, { desc = "toggle deleted" })
+					map("n", "<leader>utl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
 
 					-- Text object
 					map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")

@@ -32,7 +32,7 @@ return {
 					"graphql",
 					"html",
 					"javascript",
-					'jsdoc',
+					"jsdoc",
 					"json",
 					"jsonc",
 					"lua",
@@ -85,11 +85,23 @@ return {
 							["a="] = { query = "@assignment.outer", desc = "Select outer part of an assignment region" },
 							["i="] = { query = "@assignment.inner", desc = "Select inner part of an assignment region" },
 
-							["a:"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/field region" },
-							["i:"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/field region" },
+							["a:"] = {
+								query = "@parameter.outer",
+								desc = "Select outer part of a parameter/field region",
+							},
+							["i:"] = {
+								query = "@parameter.inner",
+								desc = "Select inner part of a parameter/field region",
+							},
 
-							["ai"] = { query = "@conditional.outer", desc = "Select outer part of a conditional region" },
-							["ii"] = { query = "@conditional.inner", desc = "Select inner part of a conditional region" },
+							["ai"] = {
+								query = "@conditional.outer",
+								desc = "Select outer part of a conditional region",
+							},
+							["ii"] = {
+								query = "@conditional.inner",
+								desc = "Select inner part of a conditional region",
+							},
 
 							["al"] = { query = "@loop.outer", desc = "Select outer part of a loop region" },
 							["il"] = { query = "@loop.inner", desc = "Select inner part of a loop region" },
@@ -108,10 +120,10 @@ return {
 					swap = {
 						enable = true,
 						swap_next = {
-							["<leader>on"] = "@parameter.inner", -- swap object under cursor with next
+							["<leader>cpsp"] = "@parameter.inner", -- swap object under cursor with next
 						},
 						swap_previous = {
-							["<leader>op"] = "@parameter.inner", -- swap object under cursor with previous
+							["<leader>cpsn"] = "@parameter.inner", -- swap object under cursor with previous
 						},
 					},
 				},
