@@ -8,15 +8,6 @@ return {
 				panel = { enabled = false },
 				suggestion = {
 					enabled = false,
-					auto_trigger = true,
-					debounce = 50,
-					keymap = {
-						accept = "<M-CR>",
-						accept_line = false,
-						next = "<M-]>",
-						prev = "<M-[>",
-						dissmiss = "<M-Esc>",
-					},
 				},
 			})
 		end,
