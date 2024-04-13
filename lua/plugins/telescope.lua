@@ -7,53 +7,72 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 	},
-
-	config = function()
-		local telescope = require("telescope")
-		local actions = require("telescope.actions")
-
-		telescope.setup({
-			defaults = {
-				sorting_strategy = "ascending",
-				layout_strategy = "horizontal",
-				layout_config = {
+	opts = {
+		defaults = {
+			-- prompt_prefix = "   ",
+			selection_caret = "  ",
+			entry_prefix = "  ",
+			initial_mode = "insert",
+			sorting_strategy = "ascending",
+			layout_strategy = "horizontal",
+			layout_config = {
+				horizontal = {
 					prompt_position = "top",
+					preview_width = 0.55,
+					results_width = 0.8,
 				},
-				path_display = { "truncate " },
-				mappings = {
-					i = {
-						["<C-k>"] = actions.move_selection_previous, -- move to prev result
-						["<C-j>"] = actions.move_selection_next, -- move to next result
-						["<C-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
-					},
+				width = 0.87,
+				preview_cutoff = 120,
+			},
+			path_display = { "truncate " },
+			mappings = {
+				i = {
+					["<C-k>"] = require("telescope.actions").move_selection_previous,
+					["<C-j>"] = require("telescope.actions").move_selection_next,
+					["<C-q>"] = require("telescope.actions").send_selected_to_qflist
+						+ require("telescope.actions").open_qflist,
+					["<C-h>"] = "which_key",
+				},
+				n = { ["q"] = require("telescope.actions").close },
+			},
+			file_ignore_patterns = { "node_modules" },
+			extensions = {
+				fzf = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case",
 				},
 			},
-		})
+		},
+	},
+	config = function(_, opts)
+		local telescope = require("telescope")
 
-		telescope.load_extension("fzf")
-
-		-- set keymaps
-		local keymap = vim.keymap
-		local builtin = require("telescope.builtin")
-
-		keymap.set("n", "<leader>ba", builtin.buffers, { desc = "Switch buffers" })
-		keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Files in cwd" })
-		keymap.set("n", "<leader><leader>", builtin.find_files, { desc = "Files in cwd" })
-		keymap.set("n", "<leader>.", builtin.find_files, { desc = "Files in cwd" })
-		keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Recent files" })
-		keymap.set("n", "<leader>fs", builtin.current_buffer_fuzzy_find, { desc = "String in buffer" })
-		keymap.set("n", "<leader>fS", builtin.live_grep, { desc = "String in cwd" })
-		keymap.set("n", "<leader>fc", builtin.grep_string, { desc = "String under cursor in cwd" })
-		keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffer" })
-		keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help page" })
-		keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "Man page" })
-		keymap.set("n", "<leader>fv", builtin.vim_options, { desc = "Vim option" })
-		keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Keymap" })
-		keymap.set("n", "<leader>fl", builtin.highlights, { desc = "Available highlights" })
-		keymap.set("n", "<leader>fgc", builtin.git_commits, { desc = "Commits" })
-		keymap.set("n", "<leader>fgC", builtin.git_bcommits, { desc = "Buffer's commits" })
-		keymap.set("n", "<leader>fgb", builtin.git_branches, { desc = "Branches" })
-		keymap.set("n", "<leader>fgs", builtin.git_status, { desc = "Status" })
-		keymap.set("n", "<leader>fgS", builtin.git_stash, { desc = "Stash" })
+		telescope.setup(opts)
 	end,
+	keys = {
+		{
+			"<leader>ff",
+			"<cmd>Telescope find_files<CR>",
+			desc = "Files in cwd",
+		},
+		{ "<leader><leader>", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
+		{ "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
+		{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
+		{ "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "String in buffer" },
+		{ "<leader>fS", "<cmd>Telescope live_grep<cr>", desc = "String in cwd" },
+		{ "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "String under cursor in cwd" },
+		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffer" },
+		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help page" },
+		{ "<leader>fm", "<cmd>Telescope man_pages<cr>", desc = "Man page" },
+		{ "<leader>fv", "<cmd>Telescope vim_options<cr>", desc = "Vim option" },
+		{ "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Keymap" },
+		{ "<leader>fl", "<cmd>Telescope highlights<cr>", desc = "Available highlights" },
+		{ "<leader>fgc", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
+		{ "<leader>fgC", "<cmd>Telescope git_bcommits<cr>", desc = "Buffer's commits" },
+		{ "<leader>fgb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
+		{ "<leader>fgs", "<cmd>Telescope git_status<cr>", desc = "Status" },
+		{ "<leader>fgS", "<cmd>Telescope git_stash<cr>", desc = "Stash" },
+	},
 }
