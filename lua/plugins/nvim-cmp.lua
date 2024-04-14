@@ -17,7 +17,7 @@ return {
 		"rafamadriz/friendly-snippets", -- useful snippets
 		"onsails/lspkind.nvim", -- vs-code like pictograms
 	},
-	config = function()
+	opts = function()
 		local cmp = require("cmp")
 
 		local luasnip = require("luasnip")
@@ -77,9 +77,10 @@ return {
 			-- configure lspkind for vs-code like pictograms in completion menu
 			formatting = {
 				format = lspkind.cmp_format({
-					mode = "symbol",
+					mode = "symbol_text",
 					maxwidth = 50,
 					ellipsis_char = "...",
+					show_labelDetails = true,
 					symbol_map = { Copilot = "" },
 				}),
 			},
