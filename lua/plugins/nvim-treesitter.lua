@@ -2,6 +2,7 @@ return {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPre", "BufNewFile" },
+		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 		build = ":TSUpdate",
 		dependencies = {
 			"windwp/nvim-ts-autotag",
@@ -135,10 +136,13 @@ return {
 		"nvim-treesitter/nvim-treesitter-context",
 		enabled = false,
 		opts = { mode = "cursor" },
-		config = function()
-			local keymap = vim.keymap
-			keymap.set("n", "<leader>uc", "<cmd>TSContextToggle<CR>", { desc = "Toggle context" })
-		end,
+		keys = {
+			{
+				"<leader>uc",
+				"<cmd>TSContextToggle<CR>",
+				desc = "Toggle context",
+			},
+		},
 	},
 
 	-- Automatically add closing tags for HTML and JSX
