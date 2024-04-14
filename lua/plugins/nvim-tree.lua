@@ -13,12 +13,20 @@ return {
 
 		-- configure nvim-tree
 		nvimtree.setup({
+
+			hijack_cursor = true,
 			view = {
 				width = 45,
 				relativenumber = true,
 			},
+			update_focused_file = {
+				enable = true,
+				update_root = false,
+			},
 			-- change folder arrow icons
 			renderer = {
+				full_name = true,
+				highlight_opened_files = "all",
 				indent_markers = {
 					enable = true,
 				},
@@ -45,12 +53,7 @@ return {
 		local keymap = vim.keymap
 
 		keymap.set("n", "<leader>et", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
-		keymap.set(
-			"n",
-			"<leader>fe",
-			"<cmd>NvimTreeFindFileToggle<CR>",
-			{ desc = "File in explorer" }
-		) -- toggle file explorer on current file
+		keymap.set("n", "<leader>fe", "<cmd>NvimTreeFindFileToggle<CR>", { desc = "File in explorer" }) -- toggle file explorer on current file
 		keymap.set(
 			"n",
 			"<leader>ef",
