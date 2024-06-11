@@ -28,7 +28,7 @@ return {
 			-- proxy = "socks5://127.0.0.1:3000", -- Proxies requests via https or socks.
 			-- temperature = 0.1,
 			window = {
-				layout = "float",
+				layout = "vertical",
 			},
 		},
 		build = function()
