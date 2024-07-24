@@ -1,4 +1,5 @@
 return {
+	{ "echasnovski/mini.icons", version = false },
 	{
 		"echasnovski/mini.pairs",
 		version = false,

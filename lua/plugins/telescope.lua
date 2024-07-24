@@ -57,7 +57,7 @@ return {
 			"<cmd>Telescope find_files<CR>",
 			desc = "Files in cwd",
 		},
-		{ "<leader><leader>", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
+		{ "<leader><leader>", "<cmd>Telescope buffers<cr>", desc = "Files in cwd" },
 		{ "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
 		{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
 		{ "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "String in buffer" },
