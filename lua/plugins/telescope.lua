@@ -43,6 +43,16 @@ return {
 					override_file_sorter = true,
 					case_mode = "smart_case",
 				},
+				aerial = {
+					-- Display symbols as <root>.<parent>.<symbol>
+					show_nesting = {
+						["_"] = false, -- This key will be the default
+						json = true, -- You can set the option for specific filetypes
+						yaml = true,
+					},
+					-- Available modes: symbols, lines, both
+					show_columns = "both",
+				},
 			},
 		},
 	},
@@ -73,6 +83,17 @@ return {
 		{ "<leader>fgC", "<cmd>Telescope git_bcommits<cr>", desc = "Buffer's commits" },
 		{ "<leader>fgb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
 		{ "<leader>fgs", "<cmd>Telescope git_status<cr>", desc = "Status" },
+		{ "<leader>cs", "<cmd>Telescope aerial<cr>", desc = "Symbols" },
+		aerial = {
+			-- Display symbols as <root>.<parent>.<symbol>
+			show_nesting = {
+				["_"] = false, -- This key will be the default
+				json = true, -- You can set the option for specific filetypes
+				yaml = true,
+			},
+			-- Available modes: symbols, lines, both
+			show_columns = "both",
+		},
 		{ "<leader>fgS", "<cmd>Telescope git_stash<cr>", desc = "Stash" },
 	},
 }
