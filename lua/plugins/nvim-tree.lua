@@ -13,7 +13,6 @@ return {
 
 		-- configure nvim-tree
 		nvimtree.setup({
-
 			hijack_cursor = true,
 			view = {
 				width = 45,
@@ -23,10 +22,20 @@ return {
 				enable = true,
 				update_root = false,
 			},
+			modified = {
+				enable = true,
+				show_on_dirs = true,
+			},
 			-- change folder arrow icons
 			renderer = {
 				full_name = true,
 				highlight_opened_files = "all",
+				highlight_modified = "icon",
+				icons = {
+					show = {
+						modified = true,
+					},
+				},
 				indent_markers = {
 					enable = true,
 				},
