@@ -52,7 +52,6 @@ return {
 			keymap.set("n", "<leader>cX", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
 
 			opts.desc = "Show line diagnostics"
-			keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
 			keymap.set("n", "<leader>cx", vim.diagnostic.open_float, opts) -- show diagnostics for line
 
 			opts.desc = "Go to previous diagnostic"
@@ -67,6 +66,25 @@ return {
 
 			opts.desc = "Restart LSP"
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+			opts.desc = "Toggle Diagnostics"
+			keymap.set(
+				"n",
+				"<leader>ud",
+				(function()
+					local diag_status = 1 -- 1 is show; 0 is hide
+					return function()
+						if diag_status == 1 then
+							diag_status = 0
+							vim.diagnostic.hide()
+						else
+							diag_status = 1
+							vim.diagnostic.show()
+						end
+					end
+				end)(),
+				opts
+			)
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
