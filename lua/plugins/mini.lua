@@ -10,6 +10,7 @@ return {
 	},
 	{
 		"echasnovski/mini.animate",
+		enable = false,
 		version = false,
 		opts = function()
 			-- don't use animate when scrolling with the mouse
