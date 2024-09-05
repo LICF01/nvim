@@ -1,3 +1,4 @@
+local o = vim.o -- behaves like :set but with global scope
 local opt = vim.opt -- behaves like :set
 
 -- UI settings
@@ -27,3 +28,5 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.hlsearch = true -- highlight matching search
 opt.ignorecase = true -- case insensitive on search..
 opt.smartcase = true -- ..unless there's a capital letter
+
+o.swapfile = false -- disable swap file
