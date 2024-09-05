@@ -69,7 +69,7 @@ return {
 		},
 		{ "<leader><leader>", "<cmd>Telescope buffers<cr>", desc = "Files in cwd" },
 		{ "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
-		{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
+		-- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
 		{ "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "String in buffer" },
 		{ "<leader>fS", "<cmd>Telescope live_grep<cr>", desc = "String in cwd" },
 		{ "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "String under cursor in cwd" },
