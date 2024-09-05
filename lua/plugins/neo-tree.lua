@@ -12,6 +12,7 @@ return {
 		hide_root_node = true,
 		retain_hidden_root_indent = true,
 		filesystem = {
+			follow_current_file = { enabled = true },
 			filtered_items = {
 				show_hidden_count = false,
 				never_show = {
@@ -42,11 +43,14 @@ return {
 				["b"] = function()
 					vim.api.nvim_exec("Neotree focus buffers left", true)
 				end,
-				["g"] = function()
-					vim.api.nvim_exec("Neotree focus git_status left", true)
-				end,
 				["o"] = "system_open",
 				["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+			},
+		},
+		buffers = {
+			follow_current_file = {
+				enabled = true,
+				leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
 			},
 		},
 		commands = {
