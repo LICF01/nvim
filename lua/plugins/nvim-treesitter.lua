@@ -5,7 +5,6 @@ return {
 		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 		build = ":TSUpdate",
 		dependencies = {
-			"windwp/nvim-ts-autotag",
 			"nvim-treesitter/nvim-treesitter-textobjects",
 		},
 		config = function()
@@ -20,8 +19,6 @@ return {
 				-- enable indentation
 				indent = { enable = true },
 
-				-- enable autotagging (w/ nvim-ts-autotag plugin)
-				autotag = { enable = true },
 				-- ensure these language parsers are installed
 				ensure_installed = {
 					"astro",
@@ -75,6 +72,38 @@ return {
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				textobjects = {
+					move = {
+						enable = true,
+						set_jumps = true,
+						goto_next_start = {
+							["]f"] = "@function.outer",
+							["]F"] = "@function.inner",
+							["]]"] = { query = "@class.outer", desc = "Next class start" },
+							["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+							["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+							goto_next_end = {
+								["]f"] = "@function.outer",
+								["]c"] = "@class.outer",
+							},
+							goto_previous_start = {
+								["[f"] = "@function.outer",
+								["[c"] = "@class.outer",
+							},
+							goto_previous_end = {
+								["[f"] = "@function.outer",
+								["[c"] = "@class.outer",
+							},
+							-- Below will go to either the start or the end, whichever is closer.
+							-- Use if you want more granular movements
+							-- Make it even more gradual by adding multiple queries and regex.
+							goto_next = {
+								["]i"] = "@conditional.outer",
+							},
+							goto_previous = {
+								["[i"] = "@conditional.outer",
+							},
+						},
+					},
 					select = {
 						enable = true,
 
@@ -127,6 +156,15 @@ return {
 							["<leader>cpsn"] = "@parameter.inner", -- swap object under cursor with previous
 						},
 					},
+					lsp_interop = {
+						enable = true,
+						border = "none",
+						floating_preview_opts = {},
+						peek_definition_code = {
+							["<leader>df"] = "@function.outer",
+							["<leader>dF"] = "@class.outer",
+						},
+					},
 				},
 			})
 		end,
@@ -149,6 +187,15 @@ return {
 	{
 		"windwp/nvim-ts-autotag",
 		event = "InsertEnter",
-		opts = {},
+
+		config = function()
+			require("nvim-ts-autotag").setup({
+				opts = {
+					enable_close = true, -- Auto close tags
+					enable_rename = true, -- Auto rename pairs of tags
+					enable_close_on_slash = false, -- Auto close on trailing </
+				},
+			})
+		end,
 	},
 }
