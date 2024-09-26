@@ -31,9 +31,13 @@ return {
 					["<C-j>"] = require("telescope.actions").move_selection_next,
 					["<C-q>"] = require("telescope.actions").send_selected_to_qflist
 						+ require("telescope.actions").open_qflist,
-					["<C-h>"] = "which_key",
+					["<C-/>"] = "which_key",
+					["<C-d>"] = require("telescope.actions").delete_buffer,
 				},
-				n = { ["q"] = require("telescope.actions").close },
+				n = {
+					["q"] = require("telescope.actions").close,
+					["d"] = require("telescope.actions").delete_buffer,
+				},
 			},
 			file_ignore_patterns = { "node_modules" },
 			extensions = {
@@ -67,13 +71,13 @@ return {
 			"<cmd>Telescope find_files<CR>",
 			desc = "Files in cwd",
 		},
-		{ "<leader><leader>", "<cmd>Telescope buffers<cr>", desc = "Files in cwd" },
+		{ "<leader><leader>", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Files in cwd" },
 		{ "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
 		-- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
 		{ "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "String in buffer" },
 		{ "<leader>fS", "<cmd>Telescope live_grep<cr>", desc = "String in cwd" },
 		{ "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "String under cursor in cwd" },
-		{ "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffer" },
+		{ "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffer" },
 		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help page" },
 		{ "<leader>fm", "<cmd>Telescope man_pages<cr>", desc = "Man page" },
 		{ "<leader>fv", "<cmd>Telescope vim_options<cr>", desc = "Vim option" },
@@ -84,6 +88,7 @@ return {
 		{ "<leader>fgb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
 		{ "<leader>fgs", "<cmd>Telescope git_status<cr>", desc = "Status" },
 		{ "<leader>cs", "<cmd>Telescope aerial<cr>", desc = "Symbols" },
+		{ "<leader>sn", "<cmd>Telescope noice<cr>", desc = "Notifications" },
 		aerial = {
 			-- Display symbols as <root>.<parent>.<symbol>
 			show_nesting = {
