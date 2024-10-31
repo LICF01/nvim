@@ -8,6 +8,9 @@ return {
 			"nvim-telescope/telescope.nvim",
 		},
 		config = true,
+		opts = {
+			graph_style = "kitty",
+		},
 		keys = {
 			{
 				"<leader>tn",
