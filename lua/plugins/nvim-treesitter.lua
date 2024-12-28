@@ -78,7 +78,7 @@ return {
 						goto_next_start = {
 							["]f"] = "@function.outer",
 							["]F"] = "@function.inner",
-							["]]"] = { query = "@class.outer", desc = "Next class start" },
+							-- ["]]"] = { query = "@class.outer", desc = "Next class start" },
 							["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
 							["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
 							goto_next_end = {
@@ -172,15 +172,24 @@ return {
 	-- Show context of the current function
 	{
 		"nvim-treesitter/nvim-treesitter-context",
-		enabled = false,
-		opts = { mode = "cursor" },
-		keys = {
-			{
-				"<leader>uc",
-				"<cmd>TSContextToggle<CR>",
-				desc = "Toggle context",
-			},
-		},
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			local keymap = vim.keymap
+
+			local context = require("treesitter-context")
+
+			context.setup({
+				enable = true,
+				mode = "cursor",
+				-- separator = "-",
+			})
+
+			keymap.set("n", "[c", function()
+				context.go_to_context(vim.v.count1)
+			end, { desc = "Jump to context", silent = true })
+
+			keymap.set("n", "<leader>uc", ":TSContextToggle<CR>", { desc = "Toggle context" })
+		end,
 	},
 
 	-- Automatically add closing tags for HTML and JSX
