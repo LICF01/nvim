@@ -20,7 +20,7 @@ return {
 		-- set keymaps
 		local keymap = vim.keymap
 		keymap.set("n", "<leader>fr", "<cmd>TSToolsFileReferences<CR>", { desc = "Show File references" })
-		keymap.set("n", "<leader>fR", "<cmd>TSToolsRenameFile<CR>", { desc = "Rename file" })
+		-- keymap.set("n", "<leader>fR", "<cmd>TSToolsRenameFile<CR>", { desc = "Rename file" })
 		keymap.set("n", "<leader>cS", "<cmd>TSToolsGoToSourceDefinition<CR>", { desc = "Go to source definition" })
 		keymap.set("n", "<leader>cA", "<cmd>TSToolsAddMissingImports<CR>", { desc = "Add missing imports" })
 		keymap.set("n", "<leader>co", "<cmd>TSToolsSortImports<CR>", { desc = "Sort imports" })

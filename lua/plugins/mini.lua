@@ -17,14 +17,6 @@ return {
 		end,
 	},
 	--
-	{
-		"echasnovski/mini.indentscope",
-		version = false,
-		config = function()
-			local indentscope = require("mini.indentscope")
-			indentscope.setup()
-		end,
-	},
 	-- {
 	-- 	"echasnovski/mini.completion",
 	-- 	version = false,
