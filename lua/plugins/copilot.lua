@@ -20,6 +20,11 @@ return {
 	},
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
+		dependencies = {
+			{ "github/copilot.vim" }, -- or zbirenbaum/copilot.lua
+			{ "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+		},
+		build = "make tiktoken", -- Only on MacOS or Linux
 		opts = {
 			show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes
 			debug = false, -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
@@ -31,11 +36,6 @@ return {
 				layout = "vertical",
 			},
 		},
-		build = function()
-			vim.notify(
-				"Please update the remote plugins by running ':UpdateRemotePlugins', then restart NeovimCopilotChatToggleCopilotChatToggleCopilotChatToggle."
-			)
-		end,
 		event = "VeryLazy",
 		keys = {
 			{ "<leader>tcc", "<cmd>CopilotChatOpen<cr>", desc = "Open chat" },
