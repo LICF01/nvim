@@ -117,11 +117,12 @@ return {
 			on_attach = on_attach,
 		})
 
-		-- configure tailwindcss server
-		lspconfig["tailwindcss"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		-- -- Don't use if you are using tailwind-tools.nvim
+		-- -- configure tailwindcss server
+		-- lspconfig["tailwindcss"].setup({
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- })
 
 		-- configure svelte server
 		lspconfig["svelte"].setup({
