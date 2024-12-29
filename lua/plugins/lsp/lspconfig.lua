@@ -167,7 +167,7 @@ return {
 			on_attach = on_attach,
 		})
 
-		-- configure python server
+		-- configure astro server
 		lspconfig["astro"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
