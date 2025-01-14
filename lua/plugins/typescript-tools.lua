@@ -2,6 +2,7 @@ return {
 	"pmizio/typescript-tools.nvim",
 	dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 	opts = {
+		filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "typescript.tsx" },
 		settings = {
 			tsserver_plugins = {
 				-- styled components intelisense suppport
