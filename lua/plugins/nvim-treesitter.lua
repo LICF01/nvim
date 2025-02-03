@@ -73,7 +73,7 @@ return {
 			require("nvim-treesitter.configs").setup({
 				textobjects = {
 					move = {
-						enable = true,
+						enable = false,
 						set_jumps = true,
 						goto_next_start = {
 							["]f"] = "@function.outer",
@@ -105,7 +105,7 @@ return {
 						},
 					},
 					select = {
-						enable = true,
+						enable = false,
 
 						-- Automatically jump forward to textobj, similar to targets.vim
 						lookahead = true,
@@ -148,7 +148,7 @@ return {
 						include_surrounding_whitespace = true,
 					},
 					swap = {
-						enable = true,
+						enable = false,
 						swap_next = {
 							["<leader>cpsp"] = "@parameter.inner", -- swap object under cursor with next
 						},
@@ -157,7 +157,7 @@ return {
 						},
 					},
 					lsp_interop = {
-						enable = true,
+						enable = false,
 						border = "none",
 						floating_preview_opts = {},
 						peek_definition_code = {
