@@ -2,7 +2,7 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		-- "hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-nvim-lsp",
 		"saghen/blink.cmp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
@@ -11,6 +11,7 @@ return {
 		local lspconfig = require("lspconfig")
 
 		-- import cmp-nvim-lsp plugin
+		-- local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local blink_cmp = require("blink.cmp")
 
 		local keymap = vim.keymap
@@ -44,7 +45,6 @@ return {
 			keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
 			opts.desc = "Smart rename"
-			keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
 			keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts) -- smart rename
 
 			opts.desc = "Diagnostics"
@@ -89,6 +89,7 @@ return {
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
+		-- local capabilities = cmp_nvim_lsp.default_capabilities()
 		local capabilities = blink_cmp.get_lsp_capabilities()
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
@@ -107,10 +108,10 @@ return {
 
 		-- -- Don't use tsserver if you are using typescript-tools.nvim
 		-- -- configure typescript server with plugin
-		-- lspconfig["tsserver"].setup({
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- })
+		lspconfig["ts_ls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 
 		-- configure css server
 		lspconfig["cssls"].setup({
@@ -169,6 +170,11 @@ return {
 
 		-- configure astro server
 		lspconfig["astro"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig["kotlin_language_server"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
