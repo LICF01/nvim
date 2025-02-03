@@ -65,40 +65,40 @@ return {
 
 		telescope.setup(opts)
 	end,
-	keys = {
-		{
-			"<leader>ff",
-			"<cmd>Telescope find_files<CR>",
-			desc = "Files in cwd",
-		},
-		{ "<leader><leader>", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Files in cwd" },
-		{ "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
-		-- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
-		{ "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "String in buffer" },
-		{ "<leader>fS", "<cmd>Telescope live_grep<cr>", desc = "String in cwd" },
-		{ "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "String under cursor in cwd" },
-		{ "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffer" },
-		{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help page" },
-		{ "<leader>fm", "<cmd>Telescope man_pages<cr>", desc = "Man page" },
-		{ "<leader>fv", "<cmd>Telescope vim_options<cr>", desc = "Vim option" },
-		{ "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Keymap" },
-		{ "<leader>fl", "<cmd>Telescope highlights<cr>", desc = "Available highlights" },
-		{ "<leader>fgc", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
-		{ "<leader>fgC", "<cmd>Telescope git_bcommits<cr>", desc = "Buffer's commits" },
-		{ "<leader>fgb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
-		{ "<leader>fgs", "<cmd>Telescope git_status<cr>", desc = "Status" },
-		{ "<leader>cs", "<cmd>Telescope aerial<cr>", desc = "Symbols" },
-		{ "<leader>sn", "<cmd>Telescope noice<cr>", desc = "Notifications" },
-		aerial = {
-			-- Display symbols as <root>.<parent>.<symbol>
-			show_nesting = {
-				["_"] = false, -- This key will be the default
-				json = true, -- You can set the option for specific filetypes
-				yaml = true,
-			},
-			-- Available modes: symbols, lines, both
-			show_columns = "both",
-		},
-		{ "<leader>fgS", "<cmd>Telescope git_stash<cr>", desc = "Stash" },
-	},
+	-- keys = {
+	-- 	{
+	-- 		"<leader>ff",
+	-- 		"<cmd>Telescope find_files<CR>",
+	-- 		desc = "Files in cwd",
+	-- 	},
+	-- 	{ "<leader><leader>", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Files in cwd" },
+	-- 	{ "<leader>.", "<cmd>Telescope find_files<cr>", desc = "Files in cwd" },
+	-- 	-- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent files" },
+	-- 	{ "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "String in buffer" },
+	-- 	{ "<leader>fS", "<cmd>Telescope live_grep<cr>", desc = "String in cwd" },
+	-- 	{ "<leader>fc", "<cmd>Telescope grep_string<cr>", desc = "String under cursor in cwd" },
+	-- 	{ "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffer" },
+	-- 	{ "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Help page" },
+	-- 	{ "<leader>fm", "<cmd>Telescope man_pages<cr>", desc = "Man page" },
+	-- 	{ "<leader>fv", "<cmd>Telescope vim_options<cr>", desc = "Vim option" },
+	-- 	{ "<leader>fk", "<cmd>Telescope keymaps<cr>", desc = "Keymap" },
+	-- 	{ "<leader>fl", "<cmd>Telescope highlights<cr>", desc = "Available highlights" },
+	-- 	{ "<leader>fgc", "<cmd>Telescope git_commits<cr>", desc = "Commits" },
+	-- 	{ "<leader>fgC", "<cmd>Telescope git_bcommits<cr>", desc = "Buffer's commits" },
+	-- 	{ "<leader>fgb", "<cmd>Telescope git_branches<cr>", desc = "Branches" },
+	-- 	{ "<leader>fgs", "<cmd>Telescope git_status<cr>", desc = "Status" },
+	-- 	{ "<leader>cs", "<cmd>Telescope aerial<cr>", desc = "Symbols" },
+	-- 	{ "<leader>sn", "<cmd>Telescope noice<cr>", desc = "Notifications" },
+	-- 	aerial = {
+	-- 		-- Display symbols as <root>.<parent>.<symbol>
+	-- 		show_nesting = {
+	-- 			["_"] = false, -- This key will be the default
+	-- 			json = true, -- You can set the option for specific filetypes
+	-- 			yaml = true,
+	-- 		},
+	-- 		-- Available modes: symbols, lines, both
+	-- 		show_columns = "both",
+	-- 	},
+	-- 	{ "<leader>fgS", "<cmd>Telescope git_stash<cr>", desc = "Stash" },
+	-- },
 }
