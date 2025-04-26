@@ -26,6 +26,9 @@ return {
 		require("tokyonight").setup({
 			on_highlights = function(hl, c)
 				local prompt = "#2d3149"
+				hl.BlinkCmpMenu = {
+					bg = c.bg_dark,
+				}
 				hl.TelescopeNormal = {
 					bg = c.bg_dark,
 					fg = c.fg_dark,
@@ -52,6 +55,10 @@ return {
 				hl.TelescopeResultsTitle = {
 					bg = c.bg_dark,
 					fg = c.bg_dark,
+				}
+				hl.BlinkCmpMenu = {
+					bg = "none",
+					fg = c.fg_dark,
 				}
 			end,
 		})
