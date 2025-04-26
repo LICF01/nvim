@@ -6,6 +6,7 @@ return {
 	opts = {
 		bigfile = { enabled = true },
 		dashboard = { enabled = true },
+		explorer = { enabled = true },
 		lazygit = { enabled = true, configure = true },
 		indent = { enabled = true },
 		input = { enabled = true },
@@ -14,10 +15,17 @@ return {
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
-		scope = { enabled = true },
+		scope = { enabled = false },
 		picker = {},
 	},
 	keys = {
+		{
+			"<leader>fe",
+			function()
+				Snacks.explorer()
+			end,
+			desc = "File in explorer",
+		},
 		{
 			"<leader><leader>",
 			function()
