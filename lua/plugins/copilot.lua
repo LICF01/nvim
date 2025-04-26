@@ -35,19 +35,23 @@ return {
 			window = {
 				layout = "vertical",
 			},
+			mappings = {
+				complete = {
+					insert = "<S-Tab>",
+				},
+			},
 		},
 		event = "VeryLazy",
 		keys = {
-			{ "<leader>tcc", "<cmd>CopilotChatOpen<cr>", desc = "Open chat" },
-			{ "<leader>tct", "<cmd>CopilotChatToggle<cr>", desc = "Toggle chat" },
+			{ "<leader>tcc", "<cmd>CopilotChatToggle<cr>", desc = "Toggle chat" },
 			{ "<leader>tcr", "<cmd>CopilotChatReset<cr>", desc = "Reset chat history and clear buffer" },
 			{ "<leader>tcf", "<cmd>CopilotChatFix<cr>", desc = "Find fix for error" },
-			{ "<leader>tcF", "<cmd>CopilotChatFixDiagnostic<cr>", desc = "Assit with diagnostic" },
 			{ "<leader>tce", "<cmd>CopilotChatExplain<cr>", desc = "Explain" },
 			{ "<leader>tcE", "<cmd>CopilotChatTests<cr>", desc = "Explain & generate Tests" },
 			{ "<leader>tco", "<cmd>CopilotChatOptimize<cr>", desc = "Optimize selected code" },
 			{ "<leader>tcd", "<cmd>CopilotChatDocs<cr>", desc = "Write documentation for the selected code" },
 			{ "<leader>tcw", "<cmd>CopilotChatCommit<cr>", desc = "Write commit with commitizen convention" },
+			{ "<leader>tcm", "<cmd>CopilotChatModels<cr>", desc = "View/select available models" },
 			{
 				"<leader>tch",
 				function()
