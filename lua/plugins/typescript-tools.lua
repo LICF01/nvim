@@ -13,7 +13,7 @@ return {
 			},
 		},
 	},
-	config = function(_, opts)
+	on_attach = function(_, opts)
 		local tstools = require("typescript-tools")
 
 		tstools.setup(opts)
