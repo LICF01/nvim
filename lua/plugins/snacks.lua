@@ -99,12 +99,12 @@ return {
 			desc = "Goto Definition",
 		},
 		{
-			"gr",
+			"<leader>cR",
 			function()
 				Snacks.picker.lsp_references()
 			end,
 			nowait = true,
-			desc = "References",
+			desc = "Show References",
 		},
 		{
 			"gI",
