@@ -15,10 +15,6 @@ return {
 		enabled = false,
 		opts = {},
 		-- Optional dependencies
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-			"nvim-tree/nvim-web-devicons",
-		},
 		config = function()
 			local aerial = require("aerial")
 			-- Set up aerial
