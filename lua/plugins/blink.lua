@@ -6,7 +6,6 @@ return {
 		-- lazy.nvim will automatically load the plugin when it's required by blink.cmp
 		lazy = true,
 		-- make sure to set opts so that lazy.nvim calls blink.compat's setup
-		opts = {},
 	},
 	{
 		"L3MON4D3/LuaSnip",
@@ -17,9 +16,6 @@ return {
 				"rafamadriz/friendly-snippets",
 				config = function()
 					require("luasnip.loaders.from_vscode").lazy_load()
-					require("luasnip.loaders.from_vscode").lazy_load({
-						paths = { vim.fn.stdpath("config") .. "/snippets" },
-					})
 				end,
 			},
 		},
@@ -49,7 +45,7 @@ return {
 			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
 			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
 			-- See the full "keymap" documentation for information on defining your own keymap.
-			keymap = { preset = "default" },
+			keymap = { preset = "super-tab" },
 
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
