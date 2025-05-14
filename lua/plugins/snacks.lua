@@ -15,7 +15,7 @@ return {
 		scroll = { enabled = true },
 		statuscolumn = { enabled = true },
 		words = { enabled = true },
-		scope = { enabled = false },
+		scope = { enabled = true },
 		picker = {},
 	},
 	keys = {
@@ -92,7 +92,7 @@ return {
 		},
 		-- LSP
 		{
-			"gd",
+			"<leader>cd",
 			function()
 				Snacks.picker.lsp_definitions()
 			end,
@@ -107,18 +107,18 @@ return {
 			desc = "Show References",
 		},
 		{
-			"gI",
+			"<leader>cI",
 			function()
 				Snacks.picker.lsp_implementations()
 			end,
 			desc = "Goto Implementation",
 		},
 		{
-			"gy",
+			"<leader>ct",
 			function()
 				Snacks.picker.lsp_type_definitions()
 			end,
-			desc = "Goto T[y]pe Definition",
+			desc = "Goto Type Definition",
 		},
 		{
 			"<leader>ss",
@@ -187,11 +187,39 @@ return {
 			desc = "Commands",
 		},
 		{
-			"<leader>sd",
+			"<leader>sx",
 			function()
 				Snacks.picker.diagnostics()
 			end,
 			desc = "Diagnostics",
+		},
+		{
+			"<leader>bx",
+			function()
+				Snacks.picker.diagnostics_buffer()
+			end,
+			desc = "Buffer Diagnostics",
+		},
+		{
+			"<leader>bX",
+			function()
+				Snacks.picker.diagnostics()
+			end,
+			desc = "All Diagnostics",
+		},
+		{
+			"<leader>cx",
+			function()
+				Snacks.picker.diagnostics_buffer()
+			end,
+			desc = "Diagnostics",
+		},
+		{
+			"<leader>cX",
+			function()
+				Snacks.picker.diagnostics()
+			end,
+			desc = "All Diagnostics",
 		},
 		{
 			"<leader>sh",
