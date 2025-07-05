@@ -32,3 +32,5 @@ opt.ignorecase = true -- case insensitive on search..
 opt.smartcase = true -- ..unless there's a capital letter
 
 o.swapfile = false -- disable swap file
+
+opt.conceallevel = 2

@@ -1,8 +1,22 @@
 return {
 	{
+		"sindrets/diffview.nvim",
+		keys = {
+			{
+				"<leader>td",
+				"<cmd>DiffviewOpen<CR>",
+				desc = "Open Diffview",
+			},
+			{
+				"<leader>cgod",
+				"<cmd>DiffviewOpen<CR>",
+				desc = "Open Diffview",
+			},
+		},
+	},
+	{
 		"NeogitOrg/neogit",
 		dependencies = {
-			"sindrets/diffview.nvim", -- optional - Diff integration
 			-- Only one of these is needed, not both.
 			"nvim-telescope/telescope.nvim",
 		},
@@ -20,21 +34,6 @@ return {
 				"<leader>cgon",
 				"<cmd>Neogit<CR>",
 				desc = "Neogit",
-			},
-		},
-	},
-	{
-		"sindrets/diffview.nvim",
-		keys = {
-			{
-				"<leader>td",
-				"<cmd>DiffviewOpen<CR>",
-				desc = "Open Diffview",
-			},
-			{
-				"<leader>cgod",
-				"<cmd>DiffviewOpen<CR>",
-				desc = "Open Diffview",
 			},
 		},
 	},

@@ -8,4 +8,11 @@ return {
 			opts = {},
 		},
 	},
+
+  -- stylua: ignore
+	keys = {
+		{ "<leader>ca", function() require("tiny-code-action").code_action() end, desc = "Actions", },
+	}
+
+,
 }

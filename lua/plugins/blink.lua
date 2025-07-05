@@ -53,10 +53,10 @@ return {
 				preset = "luasnip",
 			},
 			sources = {
-				default = { "snippets", "lsp", "path", "buffer", "copilot", "emoji" },
+				default = { "lsp", "path", "snippets", "buffer", "copilot", "emoji" },
 				providers = {
 					snippets = {
-						score_offset = 100,
+						-- score_offset = 100,
 					},
 					lsp = {
 						score_offset = 70,
@@ -64,7 +64,7 @@ return {
 					copilot = {
 						name = "copilot",
 						module = "blink-cmp-copilot",
-						score_offset = 100,
+						-- score_offset = 100,
 						async = true,
 						-- Shows the copilot icon in the completion menu
 						transform_items = function(_, items)
@@ -104,11 +104,18 @@ return {
 				},
 				menu = {
 					border = "rounded",
+					scrolloff = 1,
 					auto_show = true,
 					draw = {
 						treesitter = { "lsp" },
 						gap = 2,
 						padding = 1,
+						columns = {
+							{ "kind_icon" },
+							{ "label", "label_description", gap = 1 },
+							{ "kind" },
+							{ "source_name" },
+						},
 					},
 					winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:BlinkCmpMenuSelection,Search:None",
 				},
@@ -172,4 +179,8 @@ return {
 		},
 		opts_extend = { "sources.default" },
 	},
+	config = function(_, opts)
+		local blink = require("blink.cmp")
+		blink.setup(opts)
+	end,
 }

@@ -5,6 +5,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
+	opts = {},
 	config = function()
 		local lsp = vim.lsp
 
@@ -24,9 +25,6 @@ return {
 
 			opts.desc = "See available code actions"
 			-- keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
-			vim.keymap.set("n", "<leader>ca", function()
-				require("tiny-code-action").code_action()
-			end, { noremap = true, silent = true })
 
 			opts.desc = "Smart rename"
 			keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts) -- smart rename
@@ -56,6 +54,7 @@ return {
 		lsp.config("html", {
 			capabilities = capabilities,
 			on_attach = on_attach,
+			filetypes = { "html", "ejs" },
 		})
 
 		-- -- Don't use tsserver if you are using typescript-tools.nvim
@@ -64,6 +63,47 @@ return {
 		-- 	capabilities = capabilities,
 		-- 	on_attach = on_attach,
 		-- })
+
+		lsp.config("vtsls", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+			filetypes = {
+
+				"javascript",
+				"javascriptreact",
+				"javascript.jsx",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+			},
+			settings = {
+				complete_function_calls = true,
+				vtsls = {
+					enableMoveToFileCodeAction = true,
+					autoUseWorkspaceTsdk = true,
+					experimental = {
+						maxInlayHintLength = 30,
+						completion = {
+							enableServerSideFuzzyMatch = true,
+						},
+					},
+				},
+			},
+			typescript = {
+				updateImportsOnFileMove = { enabled = "always" },
+				suggest = {
+					completeFunctionCalls = true,
+				},
+				inlayHints = {
+					enumMemberValues = { enabled = true },
+					functionLikeReturnTypes = { enabled = true },
+					parameterNames = { enabled = "literals" },
+					parameterTypes = { enabled = true },
+					propertyDeclarationTypes = { enabled = true },
+					variableTypes = { enabled = false },
+				},
+			},
+		})
 
 		-- configure css server
 		lsp.config("cssls", {
@@ -98,6 +138,7 @@ return {
 				"less",
 				"svelte",
 				"astro",
+				"ejs",
 			},
 		})
 

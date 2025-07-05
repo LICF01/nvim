@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"jay-babu/mason-nvim-dap.nvim",
 	},
 	config = function()
 		-- import mason
@@ -34,7 +35,6 @@ return {
 				"svelte",
 				"lua_ls",
 				"graphql",
-				"emmet_ls",
 				"prismals",
 				"pyright",
 			},
@@ -48,6 +48,9 @@ return {
 				"prettierd",
 				"stylua",
 				"eslint_d",
+				"js-debug-adapter",
+				"chrome-debug-adapter",
+				"firefox-debug-adapter",
 			},
 		})
 	end,

@@ -6,19 +6,15 @@ return {
 		build = ":TSUpdate",
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
+			"JoosepAlviste/nvim-ts-context-commentstring",
+			"RRethy/nvim-treesitter-textsubjects",
 		},
 		config = function()
 			-- import nvim-treesitter plugin
 			local treesitter = require("nvim-treesitter.configs")
 
 			-- configure treesitter
-			treesitter.setup({ -- enable syntax highlighting
-				highlight = {
-					enable = true,
-				},
-				-- enable indentation
-				indent = { enable = true },
-
+			treesitter.setup({
 				-- ensure these language parsers are installed
 				ensure_installed = {
 					"astro",
@@ -49,6 +45,14 @@ return {
 					"vimdoc",
 					"yaml",
 				},
+				-- auto install above language parsers
+				auto_install = true,
+				-- enable syntax highlighting
+				highlight = {
+					enable = true,
+				},
+				-- enable indentation
+				indent = { enable = true },
 				incremental_selection = {
 					enable = true,
 					keymaps = {
@@ -58,19 +62,6 @@ return {
 						node_decremental = "<bs>",
 					},
 				},
-				-- auto install above language parsers
-				auto_install = true,
-			})
-		end,
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-textobjects",
-		event = { "BufReadPost", "BufNewFile" },
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-		config = function()
-			require("nvim-treesitter.configs").setup({
 				textobjects = {
 					move = {
 						enable = false,
@@ -170,27 +161,27 @@ return {
 		end,
 	},
 	-- Show context of the current function
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		event = { "BufReadPre", "BufNewFile" },
-		config = function()
-			local keymap = vim.keymap
-
-			local context = require("treesitter-context")
-
-			context.setup({
-				enable = true,
-				mode = "cursor",
-				-- separator = "-",
-			})
-
-			keymap.set("n", "[c", function()
-				context.go_to_context(vim.v.count1)
-			end, { desc = "Jump to context", silent = true })
-
-			keymap.set("n", "<leader>uc", ":TSContextToggle<CR>", { desc = "Toggle context" })
-		end,
-	},
+	-- {
+	-- 	"nvim-treesitter/nvim-treesitter-context",
+	-- 	event = { "BufReadPre", "BufNewFile" },
+	-- 	config = function()
+	-- 		local keymap = vim.keymap
+	--
+	-- 		local context = require("treesitter-context")
+	--
+	-- 		context.setup({
+	-- 			enable = true,
+	-- 			mode = "cursor",
+	-- 			-- separator = "-",
+	-- 		})
+	--
+	-- 		keymap.set("n", "[c", function()
+	-- 			context.go_to_context(vim.v.count1)
+	-- 		end, { desc = "Jump to context", silent = true })
+	--
+	-- 		keymap.set("n", "<leader>uc", ":TSContextToggle<CR>", { desc = "Toggle context" })
+	-- 	end,
+	-- },
 
 	-- Automatically add closing tags for HTML and JSX
 	{
@@ -206,5 +197,12 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"wurli/contextindent.nvim",
+		-- This is the only config option; you can use it to restrict the files
+		-- which this plugin will affect (see :help autocommand-pattern).
+		opts = { pattern = "*" },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
 	},
 }

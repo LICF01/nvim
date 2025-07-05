@@ -21,7 +21,19 @@ return {
 	"folke/tokyonight.nvim",
 	lazy = false,
 	priority = 1000,
-	opts = {},
+	opts = {
+		cache = true,
+		style = "night",
+		terminal_colors = true,
+		styles = {
+			comments = "NONE",
+			keywords = "italic",
+			functions = "NONE",
+			variables = "NONE",
+			sidebars = "dark",
+			floats = "dark",
+		},
+	},
 	config = function()
 		require("tokyonight").setup({
 			on_highlights = function(hl, c)
