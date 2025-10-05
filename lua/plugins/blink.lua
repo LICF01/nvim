@@ -45,7 +45,33 @@ return {
 			-- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
 			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
 			-- See the full "keymap" documentation for information on defining your own keymap.
-			keymap = { preset = "super-tab" },
+			keymap = {
+				-- preset = "super-tab",
+				["<Tab>"] = {
+					"snippet_forward",
+					function() -- sidekick next edit suggestion
+						return require("sidekick").nes_jump_or_apply()
+					end,
+					-- function() -- if you are using Neovim's native inline completions
+					-- 	return vim.lsp.inline_completion.get()
+					-- end,
+					function(cmp)
+						if vim.b[vim.api.nvim_get_current_buf()].nes_state then
+							cmp.hide()
+							return (
+								require("copilot-lsp.nes").apply_pending_nes()
+								and require("copilot-lsp.nes").walk_cursor_end_edit()
+							)
+						end
+						if cmp.snippet_active() then
+							return cmp.accept()
+						else
+							return cmp.select_and_accept()
+						end
+					end,
+					"fallback",
+				},
+			},
 
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
@@ -55,16 +81,13 @@ return {
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "copilot", "emoji" },
 				providers = {
-					snippets = {
-						-- score_offset = 100,
-					},
 					lsp = {
 						score_offset = 70,
 					},
 					copilot = {
 						name = "copilot",
 						module = "blink-cmp-copilot",
-						-- score_offset = 100,
+						score_offset = 100,
 						async = true,
 						-- Shows the copilot icon in the completion menu
 						transform_items = function(_, items)
@@ -133,7 +156,17 @@ return {
 				enabled = true,
 			},
 			signature = { enabled = true },
-			fuzzy = { implementation = "prefer_rust_with_warning" },
+			fuzzy = {
+				implementation = "lua",
+				sorts = { "exact", "score", "sort_text" },
+				frecency = {
+					enabled = false,
+				},
+				use_proximity = false,
+				max_typos = function()
+					return 0
+				end,
+			},
 			appearance = {
 				-- Sets the fallback highlight groups to nvim-cmp's highlight groups
 				-- Useful for when your theme doesn't support blink.cmp
