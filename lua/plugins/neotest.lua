@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"antoinemadec/FixCursorHold.nvim",
 		"thenbe/neotest-playwright",
+		"marilari88/neotest-vitest",
 	},
 	config = function()
 		local neotest = require("neotest")
@@ -13,6 +14,7 @@ return {
 				playwright = require("neotest-playwright.consumers").consumers,
 			},
 			adapters = {
+				require("neotest-vitest"),
 				require("neotest-playwright").adapter({
 					options = {
 						persist_project_selection = false,

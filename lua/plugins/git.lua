@@ -97,15 +97,16 @@ return {
 					map("n", "<leader>cgbl", function()
 						gs.blame_line({ full = true })
 					end, { desc = "blame line" })
+					map("n", "<leader>cgbb", ":Gitsigns blame<cr>", { desc = "bar" })
 					map("n", "<leader>cgdf", gs.diffthis, { desc = "Diff file" })
 					map("n", "<leader>cgdF", function()
 						gs.diffthis("~")
 					end)
+					map("n", "<leader>cgdw", ":Gitsigns toggle_word_diff<cr>", { desc = "word diff" })
 					map("n", "<leader>cgud", gs.toggle_deleted, { desc = "toggle deleted" })
-					map("n", "<leader>cgub", gs.toggle_current_line_blame, { desc = "toggle line blame" })
 					map("n", "<leader>cgtd", gs.toggle_deleted, { desc = "toggle deleted" })
-					map("n", "<leader>cgtl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
 					map("n", "<leader>utd", gs.toggle_deleted, { desc = "toggle deleted" })
+					map("n", "<leader>cgtl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
 					map("n", "<leader>utl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
 
 					-- Text object

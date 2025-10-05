@@ -33,6 +33,8 @@ return {
 			keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 			keymap.set("n", "<leader>ch", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
+			keymap.set("n", "<leader>cxf", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+
 			opts.desc = "Restart LSP"
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 		end
@@ -84,7 +86,7 @@ return {
 					experimental = {
 						maxInlayHintLength = 30,
 						completion = {
-							enableServerSideFuzzyMatch = true,
+							enableServerSideFuzzyMatch = false,
 						},
 					},
 				},
@@ -155,6 +157,11 @@ return {
 		})
 
 		lsp.config("kotlin_language_server", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lsp.config("marksman", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})

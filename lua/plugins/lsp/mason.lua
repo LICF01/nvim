@@ -37,6 +37,7 @@ return {
 				"graphql",
 				"prismals",
 				"pyright",
+				"marksman",
 			},
 			-- auto-install configured servers (with lspconfig)
 			automatic_installation = true, -- not the same as ensure_installed
@@ -51,6 +52,8 @@ return {
 				"js-debug-adapter",
 				"chrome-debug-adapter",
 				"firefox-debug-adapter",
+				"markdownlint-cli2",
+				"markdown-toc",
 			},
 		})
 	end,

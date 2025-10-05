@@ -2,6 +2,7 @@ local o = vim.o -- behaves like :set but with global scope
 local opt = vim.opt -- behaves like :set
 
 -- UI settings
+o.winborder = "rounded"
 opt.guifont = "JetBrainsMono NFM:h10"
 opt.termguicolors = true -- true color support
 opt.cursorline = true -- highlight the current line
@@ -15,7 +16,7 @@ opt.splitright = true -- split right instead of left
 opt.cmdheight = 0 -- Hides the command line when not in use
 
 -- Indentation
-opt.expandtab = false -- convert tabs to spaces
+opt.expandtab = true -- convert tabs to spaces
 opt.tabstop = 2 -- tab length to n spaces
 opt.shiftwidth = 2 -- change the number of space characters inserted for indentation
 opt.smartindent = true -- do smart autoindenting when starting a new line
