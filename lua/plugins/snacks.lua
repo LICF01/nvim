@@ -8,7 +8,7 @@ return {
 		dashboard = { enabled = true },
 		explorer = { enabled = true },
 		lazygit = { enabled = false, configure = false }, -- very slow, I use a tmux floating panel
-		indent = { enabled = true },
+		indent = { enabled = false },
 		input = { enabled = true },
 		notifier = { enabled = true },
 		quickfile = { enabled = true },
@@ -74,8 +74,9 @@ return {
 		{ "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line", },
 		{ "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History", },
 		{ "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit", },
-		{ "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)", },
+		{ "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status", },
 		{ "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications", },
+
 		{ "<c-/>", function() Snacks.terminal() end, desc = "Toggle Terminal", },
 		{ "<c-_>", function() Snacks.terminal() end, desc = "which_key_ignore", }, 
 		{ "]]", function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" }, },

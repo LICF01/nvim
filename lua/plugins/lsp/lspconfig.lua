@@ -166,6 +166,11 @@ return {
 			on_attach = on_attach,
 		})
 
+		lsp.config("sqlls", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
 		-- configure lua server (with special settings)
 		lsp.config("lua_ls", {
 			on_attach = on_attach,

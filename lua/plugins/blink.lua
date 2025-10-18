@@ -50,7 +50,10 @@ return {
 				["<Tab>"] = {
 					"snippet_forward",
 					function() -- sidekick next edit suggestion
-						return require("sidekick").nes_jump_or_apply()
+						local ok, sidekick = pcall(require, "sidekick")
+						if ok then
+							return sidekick.nes_jump_or_apply()
+						end
 					end,
 					-- function() -- if you are using Neovim's native inline completions
 					-- 	return vim.lsp.inline_completion.get()
@@ -212,8 +215,4 @@ return {
 		},
 		opts_extend = { "sources.default" },
 	},
-	config = function(_, opts)
-		local blink = require("blink.cmp")
-		blink.setup(opts)
-	end,
 }
