@@ -82,7 +82,7 @@ return {
 				preset = "luasnip",
 			},
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer", "copilot", "emoji" },
+				default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "emoji" },
 				providers = {
 					lsp = {
 						score_offset = 70,
@@ -102,6 +102,12 @@ return {
 							end
 							return items
 						end,
+					},
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						-- make lazydev completions top priority (see `:h blink.cmp`)
+						score_offset = 100,
 					},
 					emoji = {
 						module = "blink-emoji",
@@ -129,7 +135,7 @@ return {
 					},
 				},
 				menu = {
-					border = "rounded",
+					border = "none",
 					scrolloff = 1,
 					auto_show = true,
 					draw = {
@@ -143,15 +149,10 @@ return {
 							{ "source_name" },
 						},
 					},
-					winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:BlinkCmpMenuSelection,Search:None",
 				},
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 200,
-					window = {
-						border = "rounded",
-						winhighlight = "Normal:Normal,FloatBorder:Normal,CursorLine:BlinkCmpDocCursorLine,Search:None",
-					},
 				},
 				ghost_text = { enabled = true },
 			},

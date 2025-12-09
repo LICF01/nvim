@@ -84,10 +84,10 @@ return {
 						bg = c.bg_dark,
 						fg = c.bg_dark,
 					}
-					hl.BlinkCmpMenu = {
-						bg = "none",
-						fg = c.fg_dark,
-					}
+					-- hl.BlinkCmpMenu = {
+					-- 	bg = "none",
+					-- 	fg = c.fg_dark,
+					-- }
 				end,
 			})
 		end,
