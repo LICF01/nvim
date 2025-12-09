@@ -5,6 +5,7 @@ return {
 		vim.o.timeout = true
 		vim.o.timeoutlen = 500
 	end,
+
 	opts = {
 		plugins = {
 			marks = true,
@@ -24,11 +25,12 @@ return {
 		},
 		preset = "modern",
 		win = {
-			border = "rounded", -- none, single, double, shadow, rounded
+			border = "none", -- none, single, double, shadow, rounded
 		},
 		show_help = true,
 		spec = {
 			mode = { "n", "v" },
+			{ "<leader>a", group = "ai" },
 			{ "<leader>b", group = "buffers" },
 			{ "<leader>bc", group = "close" },
 			{ "<leader>c", group = "code" },
@@ -45,19 +47,21 @@ return {
 			{ "<leader>cps", group = "swap" },
 			{ "<leader>cpsp", desc = "swap previous" },
 			{ "<leader>cpsn", desc = "swap next" },
+			{ "<leader>d", group = "debug" },
+			{ "<leader>D", group = "databases" },
 			{ "<leader>e", group = "editor" },
 			{ "<leader>f", group = "file/find" },
 			{ "<leader>fg", group = "git" },
 			{ "<leader>g", group = "git" },
 			{ "<leader>q", group = "session" },
 			{ "<leader>s", group = "search" },
-			{ "<leader>S", group = "surround" },
 			{ "<leader>t", group = "tools" },
 			{ "<leader>tc", group = "CopilotChat" },
 			{ "<leader>T", group = "Test" },
 			{ "<leader>u", group = "ui" },
 			{ "<leader>ut", group = "toggle" },
 			{ "<leader>x", group = "diagnostics" },
+			{ "<leader>z", group = "surround" },
 		},
 	},
 	config = function(_, opts)
