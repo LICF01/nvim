@@ -48,13 +48,13 @@ return {
 		opts = {
 			n_lines = 40,
 			mappings = {
-				add = "<leader>Sa", -- Add surrounding in Normal and Visual modes
-				delete = "<leader>Sd", -- Delete surrounding
-				find = "<leader>Sf", -- Find surrounding (to the right)
-				find_left = "<leader>SF", -- Find surrounding (to the left)
-				highlight = "<leader>Sh", -- Highlight surrounding
-				replace = "<leader>Sr", -- Replace surrounding
-				update_n_lines = "<leader>Sn", -- Update `n_lines`
+				add = "<leader>za", -- Add surrounding in Normal and Visual modes
+				delete = "<leader>zd", -- Delete surrounding
+				find = "<leader>zf", -- Find surrounding (to the right)
+				find_left = "<leader>zF", -- Find surrounding (to the left)
+				highlight = "<leader>zh", -- Highlight surrounding
+				replace = "<leader>zr", -- Replace surrounding
+				update_n_lines = "<leader>zn", -- Update `n_lines`
 			},
 		},
 	},
