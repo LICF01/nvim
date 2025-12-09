@@ -1,10 +1,3 @@
 require("core.keymaps")
 require("core.options")
 require("core.lazy")
-
-vim.api.nvim_create_user_command("CopyProjectPath", function()
-	local full_path = vim.fn.expand("%:p")
-	local rel_path = full_path:gsub("/home/lucas/code/work/dc/datacapture-react/", "")
-	vim.fn.setreg("+", rel_path)
-	print("Copied: " .. rel_path)
-end, {})
