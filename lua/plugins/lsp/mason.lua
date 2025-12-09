@@ -29,15 +29,20 @@ return {
 			-- list of servers for mason to install
 			ensure_installed = {
 				"astro",
-				"html",
 				"cssls",
-				"tailwindcss",
-				"svelte",
-				"lua_ls",
+				"cssmodules_ls",
+				"css_variables",
+				"docker_language_server",
+				"emmet_language_server",
 				"graphql",
-				"prismals",
-				"pyright",
+				"html",
+				"lua_ls",
 				"marksman",
+				-- "pyright",
+				"pylsp",
+				"sqls",
+				"tailwindcss",
+				"vtsls",
 			},
 			-- auto-install configured servers (with lspconfig)
 			automatic_installation = true, -- not the same as ensure_installed
@@ -46,14 +51,17 @@ return {
 		mason_tool_installer.setup({
 			-- list of formatters and linterns for mason to install
 			ensure_installed = {
-				"prettierd",
-				"stylua",
-				"eslint_d",
-				"js-debug-adapter",
+				"biome",
 				"chrome-debug-adapter",
+				"eslint_d",
 				"firefox-debug-adapter",
+				"js-debug-adapter",
 				"markdownlint-cli2",
 				"markdown-toc",
+				"prettierd",
+				"stylua",
+				"sqlfmt",
+				"ruff",
 			},
 		})
 	end,

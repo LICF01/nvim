@@ -166,7 +166,7 @@ return {
 			on_attach = on_attach,
 		})
 
-		lsp.config("sqlls", {
+		lsp.config("sqls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
