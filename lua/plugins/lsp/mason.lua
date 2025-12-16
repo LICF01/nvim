@@ -29,6 +29,7 @@ return {
 			-- list of servers for mason to install
 			ensure_installed = {
 				"astro",
+				"copilot",
 				"cssls",
 				"cssmodules_ls",
 				"css_variables",
