@@ -5,20 +5,34 @@ return {
 	keys = {
 		-- One handed keymap recommended, you will be using the mouse
 		{
-			"<leader>tp",
+			"<leader>pu",
 			function()
 				require("oklch-color-picker").pick_under_cursor()
 			end,
-			desc = "Color pick under cursor",
+			desc = "Color under cursor",
 		},
-	},
-	---@type oklch.Opts
-	opts = {
-		highlight = {
-			style = "virtual_left",
+		{
+			"<leader>pc",
+			function()
+				require("oklch-color-picker").open_picker()
+			end,
+			desc = "Color",
+			{
+				"<leader>utc",
+				function()
+					require("oklch-color-picker").highlight.toggle()
+				end,
+				desc = "Color highlight",
+			},
 		},
-		enabled_lsps = { "tailwindcss", "cssls", "css_variables" },
-		-- Disable builtin LSP colors introduced in Nvim 0.12 to avoid conflicts.
-		disable_builtin_lsp_colors = true,
+		---@type oklch.Opts
+		opts = {
+			highlight = {
+				style = "foreground+virtual_left",
+			},
+			enabled_lsps = { "tailwindcss", "cssls", "css_variables" },
+			-- Disable builtin LSP colors introduced in Nvim 0.12 to avoid conflicts.
+			disable_builtin_lsp_colors = true,
+		},
 	},
 }
