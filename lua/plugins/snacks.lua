@@ -17,25 +17,7 @@ return {
 		words = { enabled = true },
 		scope = { enabled = true },
 		picker = {
-			layout = "custom",
-			layouts = {
-				custom = {
-					layout = {
-						box = "horizontal",
-						width = 0.8,
-						min_width = 120,
-						height = 0.8,
-						{
-							box = "vertical",
-							border = "none",
-							title = "{title} {live} {flags}",
-							{ win = "input", height = 1, border = "bottom" },
-							{ win = "list", border = "none" },
-						},
-						{ win = "preview", title = "{preview}", border = false, width = 0.5 },
-					},
-				},
-			},
+			layout = "default",
 		},
 	},
 	 -- stylua: ignore

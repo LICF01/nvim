@@ -25,7 +25,7 @@ return {
 		},
 		preset = "modern",
 		win = {
-			border = "none", -- none, single, double, shadow, rounded
+			border = "rounded", -- none, single, double, shadow, rounded
 		},
 		show_help = true,
 		spec = {

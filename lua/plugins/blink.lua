@@ -135,7 +135,7 @@ return {
 					},
 				},
 				menu = {
-					border = "none",
+					-- border = "none",
 					scrolloff = 1,
 					auto_show = true,
 					draw = {

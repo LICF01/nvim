@@ -2,7 +2,7 @@ local o = vim.o -- behaves like :set but with global scope
 local opt = vim.opt -- behaves like :set
 
 -- UI settings
--- o.winborder = "rounded"
+o.winborder = "rounded"
 opt.guifont = "JetBrainsMono NFM:h10"
 opt.termguicolors = true -- true color support
 opt.cursorline = true -- highlight the current line
