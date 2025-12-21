@@ -25,14 +25,14 @@ return {
 				desc = "Color highlight",
 			},
 		},
-		---@type oklch.Opts
-		opts = {
-			highlight = {
-				style = "foreground+virtual_left",
-			},
-			enabled_lsps = { "tailwindcss", "cssls", "css_variables" },
-			-- Disable builtin LSP colors introduced in Nvim 0.12 to avoid conflicts.
-			disable_builtin_lsp_colors = true,
+	},
+	---@type oklch.Opts
+	opts = {
+		highlight = {
+			style = "foreground+virtual_left",
 		},
+		enabled_lsps = { "tailwindcss", "cssls", "css_variables" },
+		-- Disable builtin LSP colors introduced in Nvim 0.12 to avoid conflicts.
+		disable_builtin_lsp_colors = true,
 	},
 }
