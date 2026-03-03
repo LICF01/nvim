@@ -17,6 +17,7 @@ return {
 			treesitter.setup({
 				-- ensure these language parsers are installed
 				ensure_installed = {
+					"angular",
 					"astro",
 					"bash",
 					"css",
@@ -24,6 +25,7 @@ return {
 					"diff",
 					"dockerfile",
 					"gitignore",
+					"go",
 					"graphql",
 					"html",
 					"javascript",
@@ -39,6 +41,7 @@ return {
 					"php",
 					"prisma",
 					"python",
+					"qmljs",
 					"query",
 					"regex",
 					"scss",
@@ -59,7 +62,7 @@ return {
 					enable = true,
 				},
 				-- enable indentation
-				indent = { enable = false },
+				indent = { enable = true },
 				incremental_selection = {
 					enable = true,
 					keymaps = {

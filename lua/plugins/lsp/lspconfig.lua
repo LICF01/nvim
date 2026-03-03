@@ -132,6 +132,7 @@ return {
 			on_attach = on_attach,
 			filetypes = {
 				"html",
+				"htmlangular",
 				"typescriptreact",
 				"javascriptreact",
 				"css",
@@ -167,6 +168,22 @@ return {
 		})
 
 		lsp.config("sqls", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lsp.config("qmlls", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+			cmd = { "qmlls", "-E" },
+		})
+
+		lsp.config("gopls", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lsp.config("angularls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})

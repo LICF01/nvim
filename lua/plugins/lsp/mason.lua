@@ -28,19 +28,24 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
+				"angularls",
 				"astro",
 				"copilot",
 				"cssls",
 				"cssmodules_ls",
 				"css_variables",
+				"dockerls",
 				"docker_language_server",
 				"emmet_language_server",
+				"gopls",
 				"graphql",
 				"html",
 				"lua_ls",
 				"marksman",
+				"prismals",
 				-- "pyright",
 				"pylsp",
+				"qmlls",
 				"sqls",
 				"tailwindcss",
 				"vtsls",
@@ -54,6 +59,7 @@ return {
 			ensure_installed = {
 				"biome",
 				"chrome-debug-adapter",
+				"delve",
 				"eslint_d",
 				"firefox-debug-adapter",
 				"js-debug-adapter",

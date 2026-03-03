@@ -1,17 +1,41 @@
 return {
 	{
-		"sindrets/diffview.nvim",
+		"esmuellert/codediff.nvim",
+		dependencies = { "MunifTanjim/nui.nvim" },
+		cmd = "CodeDiff",
 		keys = {
 			{
-				"<leader>td",
-				"<cmd>DiffviewOpen<CR>",
-				desc = "Open Diffview",
+				"<leader>gdd",
+				"<cmd>CodeDiff<CR>",
+				desc = "Diffview",
 			},
 			{
-				"<leader>cgod",
-				"<cmd>DiffviewOpen<CR>",
-				desc = "Open Diffview",
+				"<leader>gdh",
+				"<cmd>CodeDiff history<CR>",
+				desc = "History",
 			},
+			-- {
+			-- 	"<leader>ghr",
+			-- 	function()
+			-- 		vim.ui.input({ prompt = "Commit range (e.g., origin/main..HEAD): " }, function(input)
+			-- 			if input then
+			-- 				vim.cmd("CodeDiff history " .. input)
+			-- 			end
+			-- 		end)
+			-- 	end,
+			-- 	desc = "Diff: commits in range",
+			-- },
+			-- {
+			-- 	"<leader>ghp",
+			-- 	function()
+			-- 		vim.ui.input({ prompt = "File path: " }, function(input)
+			-- 			if input then
+			-- 				vim.cmd("CodeDiff history HEAD~10 " .. input)
+			-- 			end
+			-- 		end)
+			-- 	end,
+			-- 	desc = "Diff: commits for specific file",
+			-- },
 		},
 	},
 	{
@@ -31,7 +55,7 @@ return {
 				desc = "Neogit",
 			},
 			{
-				"<leader>cgon",
+				"<leader>gon",
 				"<cmd>Neogit<CR>",
 				desc = "Neogit",
 			},
@@ -82,31 +106,29 @@ return {
 					end, { expr = true, desc = "previous hunk" })
 
 					-- Actions
-					map("n", "<leader>cgsh", gs.stage_hunk, { desc = "stage" })
-					map("n", "<leader>cgrh", gs.reset_hunk, { desc = "reset" })
-					map("v", "<leader>cgsh", function()
+					map("n", "<leader>gsh", gs.stage_hunk, { desc = "stage" })
+					map("n", "<leader>grh", gs.reset_hunk, { desc = "reset" })
+					map("v", "<leader>gsh", function()
 						gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
 					end, { desc = "stage" })
-					map("v", "<leader>cgrh", function()
+					map("v", "<leader>grh", function()
 						gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 					end, { desc = "reset" })
-					map("n", "<leader>cgsb", gs.stage_buffer, { desc = "stage buffer" })
-					map("n", "<leader>cgus", gs.undo_stage_hunk, { desc = "undo stage" })
-					map("n", "<leader>cgrb", gs.reset_buffer, { desc = "reset buffer" })
-					map("n", "<leader>cgph", gs.preview_hunk, { desc = "preview hunk" })
-					map("n", "<leader>cgbl", function()
+					map("n", "<leader>gsb", gs.stage_buffer, { desc = "stage buffer" })
+					map("n", "<leader>gus", gs.undo_stage_hunk, { desc = "undo stage" })
+					map("n", "<leader>grb", gs.reset_buffer, { desc = "reset buffer" })
+					map("n", "<leader>gph", gs.preview_hunk, { desc = "preview hunk" })
+					map("n", "<leader>gbl", function()
 						gs.blame_line({ full = true })
 					end, { desc = "blame line" })
-					map("n", "<leader>cgbb", ":Gitsigns blame<cr>", { desc = "bar" })
-					map("n", "<leader>cgdf", gs.diffthis, { desc = "Diff file" })
-					map("n", "<leader>cgdF", function()
-						gs.diffthis("~")
-					end)
-					map("n", "<leader>cgdw", ":Gitsigns toggle_word_diff<cr>", { desc = "word diff" })
-					map("n", "<leader>cgud", gs.toggle_deleted, { desc = "toggle deleted" })
-					map("n", "<leader>cgtd", gs.toggle_deleted, { desc = "toggle deleted" })
-					map("n", "<leader>utd", gs.toggle_deleted, { desc = "toggle deleted" })
-					map("n", "<leader>cgtl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
+					map("n", "<leader>gbb", ":Gitsigns blame<cr>", { desc = "bar" })
+					-- map("n", "<leader>gdf", gs.diffthis, { desc = "Diff file" })
+					-- map("n", "<leader>gdF", function()
+					-- 	gs.diffthis("~")
+					-- end)
+					map("n", "<leader>gdw", ":Gitsigns toggle_word_diff<cr>", { desc = "toggle word diff" })
+					map("n", "<leader>gtd", gs.toggle_deleted, { desc = "toggle deleted" })
+					map("n", "<leader>gtl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
 					map("n", "<leader>utl", gs.toggle_current_line_blame, { desc = "toggle line blame" })
 
 					-- Text object

@@ -78,7 +78,7 @@ return {
 		{ "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line", },
 		{ "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History", },
 		{ "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit", },
-		{ "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status", },
+		{ "<leader>gS", function() Snacks.picker.git_status() end, desc = "Git Status", },
 		{ "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications", },
 
 		{ "<c-/>", function() Snacks.terminal() end, desc = "Toggle Terminal", },
