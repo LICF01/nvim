@@ -1,68 +1,88 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
 		event = { "BufReadPre", "BufNewFile" },
 		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 		build = ":TSUpdate",
 		dependencies = {
-			"nvim-treesitter/nvim-treesitter-textobjects",
 			"JoosepAlviste/nvim-ts-context-commentstring",
-			"RRethy/nvim-treesitter-textsubjects",
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				branch = "main",
+			},
 		},
+		init = function()
+			-- ensure these language parsers are installed
+			local ensureInstalled = {
+				"angular",
+				"astro",
+				"bash",
+				"css",
+				"csv",
+				"diff",
+				"dockerfile",
+				"gitignore",
+				"go",
+				"graphql",
+				"html",
+				"javascript",
+				"jsdoc",
+				"json",
+				"kotlin",
+				"lua",
+				"luadoc",
+				"markdown",
+				"markdown_inline",
+				"nginx",
+				"php",
+				"prisma",
+				"python",
+				"qmljs",
+				"query",
+				"regex",
+				"scss",
+				"svelte",
+				"sql",
+				"tmux",
+				"toml",
+				"tsx",
+				"typescript",
+				"vim",
+				"vimdoc",
+				"yaml",
+			}
+			-- diff between already installed parsers and those that need to be installed
+			local alreadyInstalled = require("nvim-treesitter.config").get_installed()
+			local parsersToInstall = vim.iter(ensureInstalled)
+				:filter(function(parser)
+					return not vim.tbl_contains(alreadyInstalled, parser)
+				end)
+				:totable()
+			require("nvim-treesitter").install(parsersToInstall)
+
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function()
+					-- syntax highlighting, provided by Neovim
+					pcall(vim.treesitter.start)
+					-- folds, provided by Neovim
+					vim.wo.foldmethod = "expr"
+					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					-- Disable folding at startup
+					vim.wo.foldenable = false
+					-- indentation, provided by nvim-treesitter
+					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+				end,
+			})
+		end,
 		config = function()
 			-- import nvim-treesitter plugin
-			local treesitter = require("nvim-treesitter.configs")
+			local treesitter = require("nvim-treesitter")
 
 			-- configure treesitter
 			treesitter.setup({
-				-- ensure these language parsers are installed
-				ensure_installed = {
-					"angular",
-					"astro",
-					"bash",
-					"css",
-					"csv",
-					"diff",
-					"dockerfile",
-					"gitignore",
-					"go",
-					"graphql",
-					"html",
-					"javascript",
-					"jsdoc",
-					"json",
-					"jsonc",
-					"kotlin",
-					"lua",
-					"luadoc",
-					"markdown",
-					"markdown_inline",
-					"nginx",
-					"php",
-					"prisma",
-					"python",
-					"qmljs",
-					"query",
-					"regex",
-					"scss",
-					"svelte",
-					"sql",
-					"tmux",
-					"toml",
-					"tsx",
-					"typescript",
-					"vim",
-					"vimdoc",
-					"yaml",
-				},
 				-- auto install above language parsers
 				auto_install = true,
-				-- enable syntax highlighting
-				highlight = {
-					enable = true,
-				},
-				-- enable indentation
-				indent = { enable = true },
 				incremental_selection = {
 					enable = true,
 					keymaps = {
