@@ -47,8 +47,9 @@ return {
 				"pylsp",
 				"qmlls",
 				"sqls",
-				"tailwindcss",
-				"vtsls",
+				-- "tailwindcss",
+				"tsgo",
+				-- "vtsls",
 			},
 			-- auto-install configured servers (with lspconfig)
 			automatic_installation = true, -- not the same as ensure_installed
@@ -58,7 +59,7 @@ return {
 			-- list of formatters and linterns for mason to install
 			ensure_installed = {
 				"biome",
-				"chrome-debug-adapter",
+				-- "chrome-debug-adapter",
 				"delve",
 				"eslint_d",
 				"firefox-debug-adapter",

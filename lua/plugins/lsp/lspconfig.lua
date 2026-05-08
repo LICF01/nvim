@@ -66,45 +66,51 @@ return {
 		-- 	on_attach = on_attach,
 		-- })
 
-		lsp.config("vtsls", {
+		-- lsp.config("vtsls", {
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- 	filetypes = {
+		--
+		-- 		"javascript",
+		-- 		"javascriptreact",
+		-- 		"javascript.jsx",
+		-- 		"typescript",
+		-- 		"typescriptreact",
+		-- 		"typescript.tsx",
+		-- 	},
+		-- 	settings = {
+		-- 		complete_function_calls = true,
+		-- 		vtsls = {
+		-- 			enableMoveToFileCodeAction = true,
+		-- 			autoUseWorkspaceTsdk = true,
+		-- 			experimental = {
+		-- 				maxInlayHintLength = 40,
+		-- 				completion = {
+		-- 					enableServerSideFuzzyMatch = true,
+		-- 					entriesLimit = 100, -- Critical: prevents lag
+		-- 				},
+		-- 			},
+		-- 		},
+		-- 	},
+		-- 	typescript = {
+		-- 		updateImportsOnFileMove = { enabled = "always" },
+		-- 		suggest = {
+		-- 			completeFunctionCalls = true,
+		-- 		},
+		-- 		inlayHints = {
+		-- 			enumMemberValues = { enabled = true },
+		-- 			functionLikeReturnTypes = { enabled = true },
+		-- 			parameterNames = { enabled = "literals" },
+		-- 			parameterTypes = { enabled = true },
+		-- 			propertyDeclarationTypes = { enabled = true },
+		-- 			variableTypes = { enabled = false }, -- disabled for performance
+		-- 		},
+		-- 	},
+		-- })
+
+		lsp.config("tsgo", {
 			capabilities = capabilities,
 			on_attach = on_attach,
-			filetypes = {
-
-				"javascript",
-				"javascriptreact",
-				"javascript.jsx",
-				"typescript",
-				"typescriptreact",
-				"typescript.tsx",
-			},
-			settings = {
-				complete_function_calls = true,
-				vtsls = {
-					enableMoveToFileCodeAction = true,
-					autoUseWorkspaceTsdk = true,
-					experimental = {
-						maxInlayHintLength = 30,
-						completion = {
-							enableServerSideFuzzyMatch = false,
-						},
-					},
-				},
-			},
-			typescript = {
-				updateImportsOnFileMove = { enabled = "always" },
-				suggest = {
-					completeFunctionCalls = true,
-				},
-				inlayHints = {
-					enumMemberValues = { enabled = true },
-					functionLikeReturnTypes = { enabled = true },
-					parameterNames = { enabled = "literals" },
-					parameterTypes = { enabled = true },
-					propertyDeclarationTypes = { enabled = true },
-					variableTypes = { enabled = false },
-				},
-			},
 		})
 
 		-- configure css server
