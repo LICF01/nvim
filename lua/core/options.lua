@@ -1,6 +1,15 @@
 local o = vim.o -- behaves like :set but with global scope
 local opt = vim.opt -- behaves like :set
 
+-- Following snippet from https://github.com/LunarVim/LunarVim/issues/1980
+-- If the current system shell or the `shell` option is set to /usr/bin/fish then revert to sh
+if os.getenv("SHELL") == "/usr/bin/fish" or vim.opt.shell == "/usr/bin/fish" then
+	vim.opt.shell = "/bin/sh"
+else
+	-- Else default to the system current shell.
+	vim.opt.shell = os.getenv("SHELL")
+end
+
 -- UI settings
 o.winborder = "rounded"
 opt.guifont = "JetBrainsMono NFM:h10"
