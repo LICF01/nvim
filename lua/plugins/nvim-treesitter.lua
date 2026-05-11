@@ -6,7 +6,6 @@ return {
 		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 		build = ":TSUpdate",
 		dependencies = {
-			"JoosepAlviste/nvim-ts-context-commentstring",
 			{
 				"nvim-treesitter/nvim-treesitter-textobjects",
 				branch = "main",
