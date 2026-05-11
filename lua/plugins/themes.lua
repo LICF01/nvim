@@ -1,39 +1,5 @@
 return {
 	{
-		"zaldih/themery.nvim",
-		lazy = false,
-		config = function()
-			require("themery").setup({
-				themes = {
-					"tokyonight-night",
-					"tokyonight-storm",
-					"tokyonight-day",
-					"tokyonight-moon",
-					"onedark",
-					"onelight",
-					"onedark_vivid",
-					"onedark_dark",
-					"vaporwave",
-					"catppuccin-latte",
-					"catppuccin-frappe",
-					"catppuccin-macchiato",
-					"catppuccin-mocha",
-					{
-						name = "horizon-dark",
-						colorscheme = "horizon",
-						before = [[ vim.opt.background = "dark" ]],
-					},
-					{
-						name = "horizon-light",
-						colorscheme = "horizon",
-						before = [[ vim.opt.background = "light" ]],
-					},
-				},
-				livePreview = true,
-			})
-		end,
-	},
-	{
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
@@ -90,17 +56,20 @@ return {
 					-- }
 				end,
 			})
+
+			vim.cmd([[colorscheme tokyonight-night]])
 		end,
 	},
-	{
-		"olimorris/onedarkpro.nvim",
-		lazy = false,
-		priority = 1000,
-	},
-	{
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000,
-	},
-	{ "akinsho/horizon.nvim", version = "*" },
+	-- {
+	-- 	"olimorris/onedarkpro.nvim",
+	-- 	lazy = true,
+	-- 	priority = 1000,
+	-- },
+	-- {
+	-- 	lazy = true,
+	-- 	"catppuccin/nvim",
+	-- 	name = "catppuccin",
+	-- 	priority = 1000,
+	-- },
+	-- { "akinsho/horizon.nvim", version = "*", lazy = true },
 }
