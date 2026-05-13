@@ -1,7 +1,17 @@
 return {
 	"folke/flash.nvim",
 	event = "VeryLazy",
-	opts = {},
+	---@type Flash.Config
+	opts = {
+		modes = {
+			search = {
+				enabled = true,
+			},
+			char = {
+				enabled = true,
+			},
+		},
+	},
 	keys = {
 		{
 			"s",
@@ -48,6 +58,19 @@ return {
 				require("flash").toggle()
 			end,
 			desc = "Toggle Flash Search",
+		},
+		{
+			"<c-space>",
+			mode = { "n", "o", "x" },
+			function()
+				require("flash").treesitter({
+					actions = {
+						["<c-space>"] = "next",
+						["<BS>"] = "prev",
+					},
+				})
+			end,
+			desc = "Treesitter Incremental Selection",
 		},
 	},
 }
