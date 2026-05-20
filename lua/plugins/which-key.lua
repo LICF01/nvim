@@ -1,11 +1,7 @@
 return {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
-	init = function()
-		vim.o.timeout = true
-		vim.o.timeoutlen = 500
-	end,
-
+	opts_extend = { "spec" },
 	opts = {
 		plugins = {
 			marks = true,
@@ -23,7 +19,7 @@ return {
 				g = true, -- bindings for prefixed with g
 			},
 		},
-		preset = "modern",
+		preset = "helix",
 		win = {
 			border = "rounded", -- none, single, double, shadow, rounded
 		},
@@ -31,7 +27,13 @@ return {
 		spec = {
 			mode = { "n", "v" },
 			{ "<leader>a", group = "ai" },
-			{ "<leader>b", group = "buffers" },
+			{
+				"<leader>b",
+				group = "buffer",
+				expand = function()
+					return require("which-key.extras").expand.buf()
+				end,
+			},
 			{ "<leader>bc", group = "close" },
 			{ "<leader>c", group = "code" },
 			{ "<leader>cp", group = "paramters" },
@@ -46,13 +48,11 @@ return {
 			{ "<leader>fg", group = "git" },
 
 			{ "<leader>g", group = "git" },
+			{ "<leader>gh", group = "hunk" },
+			{ "<leader>ghp", group = "preview Hunk" },
 			{ "<leader>gd", group = "diff" },
 			{ "<leader>gb", group = "blame" },
-			{ "<leader>gd", group = "diff" },
 			{ "<leader>go", group = "open" },
-			{ "<leader>gp", group = "preview" },
-			{ "<leader>gr", group = "reset" },
-			{ "<leader>gs", group = "stage" },
 			{ "<leader>gt", group = "toggle" },
 			{ "<leader>gu", group = "undo" },
 
@@ -64,7 +64,24 @@ return {
 			{ "<leader>u", group = "ui" },
 			{ "<leader>ut", group = "toggle" },
 			{ "<leader>x", group = "diagnostics" },
-			{ "<leader>z", group = "surround" },
+
+			{ "[", group = "prev" },
+			{ "]", group = "next" },
+			{ "g", group = "goto" },
+			{ "gp", group = "preview" },
+			{ "gr", group = "lsp" },
+			{ "gs", group = "surround" },
+			{ "z", group = "fold" },
+			{
+				"<leader>w",
+				group = "windows",
+				proxy = "<c-w>",
+				expand = function()
+					return require("which-key.extras").expand.win()
+				end,
+			},
+			-- better descriptions
+			-- { "gx", desc = "Open with system app" },
 		},
 	},
 	config = function(_, opts)
