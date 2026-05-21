@@ -8,11 +8,11 @@ return {
 		local lint = require("lint")
 
 		lint.linters_by_ft = {
-			javascript = { "biomejs" },
-			typescript = { "biomejs" },
-			javascriptreact = { "biomejs" },
-			typescriptreact = { "biomejs" },
-			json = { "biomejs" },
+			javascript = { "eslint_d", "biomejs" },
+			typescript = { "eslint_d", "biomejs" },
+			javascriptreact = { "eslint_d", "biomejs" },
+			typescriptreact = { "eslint_d", "biomejs" },
+			json = { "eslint_d", "biomejs" },
 			markdown = { "markdownlint-cli2" },
 		}
 
