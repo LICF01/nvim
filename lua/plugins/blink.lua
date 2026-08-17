@@ -1,43 +1,41 @@
 return {
 	{
-		"saghen/blink.compat",
-		-- use the latest release, via version = '*', if you also use the latest release for blink.cmp
-		version = "*",
-		-- lazy.nvim will automatically load the plugin when it's required by blink.cmp
-		lazy = true,
-		-- make sure to set opts so that lazy.nvim calls blink.compat's setup
-	},
-	{
-		"L3MON4D3/LuaSnip",
-		version = "v2.*",
-		lazy = true,
-		dependencies = {
-			{
-				"rafamadriz/friendly-snippets",
-				config = function()
-					require("luasnip.loaders.from_vscode").lazy_load()
-				end,
-			},
-		},
-		opts = {
-			history = true,
-			delete_check_events = "TextChanged",
-		},
-	},
-	{
 		"saghen/blink.cmp",
-		-- optional: provides snippets for the snippet source
+		-- use a release tag to download pre-built binaries
+		version = "1.*",
 		dependencies = {
 			"giuxtaposition/blink-cmp-copilot",
 			"moyiz/blink-emoji.nvim",
+			{
+				"saghen/blink.compat",
+				-- use v2.* for blink.cmp v1.*
+				version = "2.*",
+				-- lazy.nvim will automatically load the plugin when it's required by blink.cmp
+				lazy = true,
+				-- make sure to set opts so that lazy.nvim calls blink.compat's setup
+				opts = {},
+			},
+			{
+				"L3MON4D3/LuaSnip",
+				version = "v2.*",
+				lazy = true,
+				dependencies = {
+					{
+						"rafamadriz/friendly-snippets",
+						config = function()
+							require("luasnip.loaders.from_vscode").lazy_load()
+							require("luasnip.loaders.from_vscode").lazy_load({
+								paths = { vim.fn.stdpath("config") .. "/snippets" },
+							})
+						end,
+					},
+				},
+				opts = {
+					history = true,
+					delete_check_events = "TextChanged",
+				},
+			},
 		},
-		event = "InsertEnter",
-		-- use a release tag to download pre-built binaries
-		version = "1.*",
-		-- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-		-- build = 'cargo build --release',
-		-- If you use nix, you can build from source using latest nightly rust with:
-		-- build = 'nix run .#build-plugin',
 		---@module 'blink.cmp'
 		---@type blink.cmp.Config
 		opts = {
@@ -46,34 +44,42 @@ return {
 			-- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
 			-- See the full "keymap" documentation for information on defining your own keymap.
 			keymap = {
-				-- preset = "super-tab",
-				["<Tab>"] = {
-					"snippet_forward",
-					function() -- sidekick next edit suggestion
-						local ok, sidekick = pcall(require, "sidekick")
-						if ok then
-							return sidekick.nes_jump_or_apply()
-						end
-					end,
-					-- function() -- if you are using Neovim's native inline completions
-					-- 	return vim.lsp.inline_completion.get()
-					-- end,
-					function(cmp)
-						if vim.b[vim.api.nvim_get_current_buf()].nes_state then
-							cmp.hide()
-							return (
-								require("copilot-lsp.nes").apply_pending_nes()
-								and require("copilot-lsp.nes").walk_cursor_end_edit()
-							)
-						end
-						if cmp.snippet_active() then
-							return cmp.accept()
-						else
-							return cmp.select_and_accept()
-						end
-					end,
-					"fallback",
-				},
+				preset = "enter",
+				["<C-y>"] = { "select_and_accept" },
+
+				-- Ctrl+Space and Ctrl+@ send the same NUL keycode (0x00) in many terminals.
+				-- Without this mapping, tmux may pass through Ctrl+Space as <C-@>, which
+				-- Neovim interprets as "insert previously inserted text and exit insert
+				-- mode" instead of triggering completion.
+				["<C-@>"] = { "show", "show_documentation", "hide_documentation" },
+
+				-- ["<Tab>"] = {
+				-- 	"snippet_forward",
+				-- 	function() -- sidekick next edit suggestion
+				-- 		local ok, sidekick = pcall(require, "sidekick")
+				-- 		if ok then
+				-- 			return sidekick.nes_jump_or_apply()
+				-- 		end
+				-- 	end,
+				-- 	-- function() -- if you are using Neovim's native inline completions
+				-- 	-- 	return vim.lsp.inline_completion.get()
+				-- 	-- end,
+				-- 	function(cmp)
+				-- 		if vim.b[vim.api.nvim_get_current_buf()].nes_state then
+				-- 			cmp.hide()
+				-- 			return (
+				-- 				require("copilot-lsp.nes").apply_pending_nes()
+				-- 				and require("copilot-lsp.nes").walk_cursor_end_edit()
+				-- 			)
+				-- 		end
+				-- 		if cmp.snippet_active() then
+				-- 			return cmp.accept()
+				-- 		else
+				-- 			return cmp.select_and_accept()
+				-- 		end
+				-- 	end,
+				-- 	"fallback",
+				-- },
 			},
 
 			-- Default list of enabled providers defined so that you can extend it
@@ -83,6 +89,9 @@ return {
 			},
 			sources = {
 				default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "emoji" },
+				per_filetype = {
+					lua = { inherit_defaults = true, "lazydev" },
+				},
 				providers = {
 					lsp = {
 						score_offset = 70,
@@ -158,6 +167,20 @@ return {
 			},
 			cmdline = {
 				enabled = true,
+				keymap = {
+					preset = "cmdline",
+					["<Right>"] = false,
+					["<Left>"] = false,
+				},
+				completion = {
+					list = { selection = { preselect = false } },
+					menu = {
+						auto_show = function(ctx)
+							return vim.fn.getcmdtype() == ":"
+						end,
+					},
+					ghost_text = { enabled = true },
+				},
 			},
 			signature = { enabled = true },
 			fuzzy = {

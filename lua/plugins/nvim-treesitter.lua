@@ -17,6 +17,8 @@ return {
 				"angular",
 				"astro",
 				"bash",
+				"c",
+				"cpp",
 				"css",
 				"csv",
 				"diff",
@@ -31,6 +33,7 @@ return {
 				"kotlin",
 				"lua",
 				"luadoc",
+				"make",
 				"markdown",
 				"markdown_inline",
 				"nginx",
@@ -62,6 +65,9 @@ return {
 
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function()
+					local lang = vim.treesitter.language.get_lang(vim.bo.filetype)
+					local has_parser = lang and vim.treesitter.query.get(lang, "indents") ~= nil
+
 					-- syntax highlighting, provided by Neovim
 					pcall(vim.treesitter.start)
 					-- folds, provided by Neovim
@@ -69,8 +75,10 @@ return {
 					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 					-- Disable folding at startup
 					vim.wo.foldenable = false
-					-- indentation, provided by nvim-treesitter
-					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					-- indentation, provided by nvim-treesitter (only if parser is installed)
+					if has_parser then
+						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+					end
 				end,
 			})
 		end,

@@ -84,7 +84,10 @@ return {
 				graphql = { "prettierd", "prettier", stop_after_first = true },
 				handlebars = { "prettierd", "prettier", stop_after_first = true },
 				python = { "ruff_format", "ruff_format", stop_after_first = true },
-				go = { { "gofmt" } },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
+				go = { "gofmt" },
+				rust = { "rustfmt", lsp_format = "fallback" },
 			},
 			format_on_save = {
 				timeout_ms = 500,

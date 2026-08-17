@@ -1,15 +1,14 @@
 return {
 	{
 		"stevearc/aerial.nvim",
-		enabled = true,
 		opts = {},
 		-- Optional dependencies
 		config = function()
 			local aerial = require("aerial")
 			-- Set up aerial
 			aerial.setup({
-
-				backends = { "lsp", "markdown", "asciidoc", "man" },
+				attach_mode = "global",
+				backends = { "lsp", "treesitter", "markdown", "asciidoc", "man" },
 				filter_kind = false,
 				layout = {
 					resize_to_content = false,

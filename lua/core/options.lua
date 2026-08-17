@@ -44,3 +44,13 @@ opt.smartcase = true -- ..unless there's a capital letter
 o.swapfile = false -- disable swap file
 
 opt.conceallevel = 2
+
+-- Makefiles require real tabs for recipe lines
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "make",
+	callback = function()
+		vim.opt_local.expandtab = false
+		vim.opt_local.tabstop = 4
+		vim.opt_local.shiftwidth = 4
+	end,
+})

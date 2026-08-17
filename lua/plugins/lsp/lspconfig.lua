@@ -2,15 +2,13 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
+		-- { "artemave/workspace-diagnostics.nvim" },
 	},
 	opts = {},
 	config = function()
 		local lsp = vim.lsp
 
-		-- import cmp-nvim-lsp plugin
-		-- local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local blink_cmp = require("blink.cmp")
 
 		local keymap = vim.keymap
@@ -24,7 +22,7 @@ return {
 			keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, opts) -- go to declaration
 
 			opts.desc = "See available code actions"
-			-- keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+			keymap.set({ "n", "v" }, "<leader>cA", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
 			opts.desc = "Smart rename"
 			keymap.set("n", "<leader>cr", vim.lsp.buf.rename, opts) -- smart rename
@@ -37,6 +35,13 @@ return {
 
 			opts.desc = "Restart LSP"
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+			-- -- some clients support workspace diagnostics natively
+			-- if client:supports_method("workspace/diagnostic", bufnr) then
+			-- 	vim.lsp.buf.workspace_diagnostics({ client_id = client.id })
+			-- else
+			-- 	require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+			-- end
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
@@ -59,59 +64,58 @@ return {
 			filetypes = { "html", "ejs" },
 		})
 
-		-- -- Don't use tsserver if you are using typescript-tools.nvim
-		-- -- configure typescript server with plugin
-		-- lspconfig["ts_ls"].setup({
+		-- Don't use tsserver if you are using typescript-tools.nvim
+		-- configure typescript server with plugin
+		-- lsp.config("ts_ls", {
 		-- 	capabilities = capabilities,
 		-- 	on_attach = on_attach,
 		-- })
-
-		-- lsp.config("vtsls", {
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- 	filetypes = {
 		--
-		-- 		"javascript",
-		-- 		"javascriptreact",
-		-- 		"javascript.jsx",
-		-- 		"typescript",
-		-- 		"typescriptreact",
-		-- 		"typescript.tsx",
-		-- 	},
-		-- 	settings = {
-		-- 		complete_function_calls = true,
-		-- 		vtsls = {
-		-- 			enableMoveToFileCodeAction = true,
-		-- 			autoUseWorkspaceTsdk = true,
-		-- 			experimental = {
-		-- 				maxInlayHintLength = 40,
-		-- 				completion = {
-		-- 					enableServerSideFuzzyMatch = true,
-		-- 					entriesLimit = 100, -- Critical: prevents lag
-		-- 				},
-		-- 			},
-		-- 		},
-		-- 	},
-		-- 	typescript = {
-		-- 		updateImportsOnFileMove = { enabled = "always" },
-		-- 		suggest = {
-		-- 			completeFunctionCalls = true,
-		-- 		},
-		-- 		inlayHints = {
-		-- 			enumMemberValues = { enabled = true },
-		-- 			functionLikeReturnTypes = { enabled = true },
-		-- 			parameterNames = { enabled = "literals" },
-		-- 			parameterTypes = { enabled = true },
-		-- 			propertyDeclarationTypes = { enabled = true },
-		-- 			variableTypes = { enabled = false }, -- disabled for performance
-		-- 		},
-		-- 	},
-		-- })
-
-		lsp.config("tsgo", {
+		lsp.config("vtsls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"javascript.jsx",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+			},
+			settings = {
+				complete_function_calls = true,
+				vtsls = {
+					enableMoveToFileCodeAction = true,
+					autoUseWorkspaceTsdk = true,
+					experimental = {
+						maxInlayHintLength = 40,
+						completion = {
+							enableServerSideFuzzyMatch = true,
+							entriesLimit = 100, -- Critical: prevents lag
+						},
+					},
+				},
+				typescript = {
+					updateImportsOnFileMove = { enabled = "always" },
+					suggest = {
+						completeFunctionCalls = true,
+					},
+					inlayHints = {
+						enumMemberValues = { enabled = true },
+						functionLikeReturnTypes = { enabled = true },
+						parameterNames = { enabled = "literals" },
+						parameterTypes = { enabled = true },
+						propertyDeclarationTypes = { enabled = true },
+						variableTypes = { enabled = false }, -- disabled for performance
+					},
+				},
+			},
 		})
+		--
+		-- lsp.config("tsgo", {
+		-- 	capabilities = capabilities,
+		-- 	on_attach = on_attach,
+		-- })
 
 		-- configure css server
 		lsp.config("cssls", {
@@ -182,6 +186,11 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 			cmd = { "qmlls", "-E" },
+		})
+
+		lsp.config("clangd", {
+			capabilities = capabilities,
+			on_attach = on_attach,
 		})
 
 		lsp.config("gopls", {

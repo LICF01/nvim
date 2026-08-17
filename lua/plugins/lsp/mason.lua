@@ -28,8 +28,9 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
-				"angularls",
+				-- "angularls",
 				"astro",
+				"clangd",
 				"copilot",
 				"cssls",
 				"cssmodules_ls",
@@ -48,7 +49,7 @@ return {
 				"qmlls",
 				"sqls",
 				-- "tailwindcss",
-				"tsgo",
+				-- "tsgo",
 				-- "vtsls",
 			},
 			-- auto-install configured servers (with lspconfig)
@@ -58,7 +59,7 @@ return {
 		mason_tool_installer.setup({
 			-- list of formatters and linterns for mason to install
 			ensure_installed = {
-				"biome",
+				-- "biome",
 				-- "chrome-debug-adapter",
 				"delve",
 				"eslint_d",
@@ -69,6 +70,7 @@ return {
 				"prettierd",
 				"stylua",
 				"sqlfmt",
+				"clang-format",
 				"ruff",
 			},
 		})

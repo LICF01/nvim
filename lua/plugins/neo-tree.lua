@@ -8,7 +8,7 @@ return {
 		"saifulapm/neotree-file-nesting-config", -- add plugin as dependency. no need any other config or setup call
 	},
 	opts = {
-		hide_root_node = true,
+		hide_root_node = false,
 		retain_hidden_root_indent = true,
 		filesystem = {
 			follow_current_file = { enabled = true },
@@ -44,6 +44,7 @@ return {
 				end,
 				["o"] = "system_open",
 				["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
+				["H"] = "toggle_hidden", -- toggle dotfiles/hidden
 			},
 		},
 		buffers = {
@@ -80,9 +81,10 @@ return {
 		-- set keymaps
 		local keymap = vim.keymap
 
-		keymap.set("n", "<leader>et", "<cmd>Neotree reveal toggle<CR>", { desc = "Toggle file explorer" })
+		-- keymap.set("n", "<leader>et", "<cmd>Neotree reveal toggle<CR>", { desc = "Toggle file explorer" })
 		keymap.set("n", "<leader>fe", "<cmd>Neotree reveal toggle<CR>", { desc = "File in explorer" }) -- toggle file explorer on current file
 		keymap.set("n", "<leader>be", "<cmd>Neotree buffers<CR>", { desc = "Open buffers in file explorer" })
+		keymap.set("n", "<leader>ge", "<cmd>Neotree git_status<CR>", { desc = "Open status in file explorer" })
 
 		-- Diagnostics signs
 		vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
