@@ -1,0 +1,4 @@
+lua/local.lua
+
+# Logs
+*.log
