@@ -7,7 +7,10 @@ return {
 			"nvim-neotest/nvim-nio",
 			"jay-babu/mason-nvim-dap.nvim",
 			config = function()
-				require("mason-nvim-dap").setup({ ensure_installed = { "firefox", "node2", "delve" } })
+				-- Only ensure adapters for enabled stacks (:Stack install ...).
+				require("mason-nvim-dap").setup({
+					ensure_installed = require("utils.lang-stacks").collect("dap"),
+				})
 			end,
 			"theHamsta/nvim-dap-virtual-text",
 		},

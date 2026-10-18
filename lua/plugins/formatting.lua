@@ -64,8 +64,10 @@ return {
 				desc = "Format file or range (in visual mode)",
 			},
 		},
-		opts = {
-			formatters_by_ft = {
+		opts = function()
+			-- Full canonical map; entries for disabled stacks are filtered
+			-- out so conform never calls a formatter you uninstalled.
+			local full = {
 				lua = { "stylua" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
 				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
@@ -81,18 +83,18 @@ return {
 				yaml = { "prettierd", "prettier", stop_after_first = true },
 				markdown = { "prettierd", "prettier", stop_after_first = true },
 				-- markdown.mdx =  { "prettierd", "prettier", stop_after_first = true } ,
-				graphql = { "prettierd", "prettier", stop_after_first = true },
 				handlebars = { "prettierd", "prettier", stop_after_first = true },
 				python = { "ruff_format", "ruff_format", stop_after_first = true },
-				c = { "clang-format" },
-				cpp = { "clang-format" },
 				go = { "gofmt" },
 				rust = { "rustfmt", lsp_format = "fallback" },
-			},
-			format_on_save = {
-				timeout_ms = 500,
-				lsp_fallback = false,
-			},
-		},
+			}
+			return {
+				formatters_by_ft = require("utils.lang-stacks").filter_ft_map(full),
+				format_on_save = {
+					timeout_ms = 500,
+					lsp_fallback = false,
+				},
+			}
+		end,
 	},
 }

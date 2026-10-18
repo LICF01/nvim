@@ -14,7 +14,9 @@ return {
 
 		local mason_tool_installer = require("mason-tool-installer")
 
-		-- enable mason and configure icons
+		local stacks = require("utils.lang-stacks")
+
+		-- Enable mason and configure icons
 		mason.setup({
 			ui = {
 				icons = {
@@ -25,54 +27,28 @@ return {
 			},
 		})
 
+		-- Only ensure the stacks enabled on THIS machine (persisted in
+		-- stdpath("data")/lang-stacks.json). Use e.g.:
+		--   :Stack install rust   (personal)
+		--   :Stack install web    (work / React)
+		--   :Stack uninstall rust (removes binaries AND disables LSP/formatters)
+		local lsp_ensure = stacks.collect("lsp")
+		local tool_ensure = stacks.collect("tools")
+
+		-- Disable automatic_installation so mason doesn't try to install
+		-- everything on startup.
 		mason_lspconfig.setup({
-			-- list of servers for mason to install
-			ensure_installed = {
-				-- "angularls",
-				"astro",
-				"clangd",
-				"copilot",
-				"cssls",
-				"cssmodules_ls",
-				"css_variables",
-				"dockerls",
-				"docker_language_server",
-				"emmet_language_server",
-				"gopls",
-				"graphql",
-				"html",
-				"lua_ls",
-				"marksman",
-				"prismals",
-				-- "pyright",
-				"pylsp",
-				"qmlls",
-				"sqls",
-				-- "tailwindcss",
-				-- "tsgo",
-				-- "vtsls",
-			},
-			-- auto-install configured servers (with lspconfig)
-			automatic_installation = true, -- not the same as ensure_installed
+			ensure_installed = lsp_ensure,
+			automatic_installation = false,
 		})
 
+		-- Don't run on start to avoid popups/long startup installs.
 		mason_tool_installer.setup({
-			-- list of formatters and linterns for mason to install
-			ensure_installed = {
-				-- "biome",
-				-- "chrome-debug-adapter",
-				"delve",
-				"eslint_d",
-				"firefox-debug-adapter",
-				"js-debug-adapter",
-				"markdownlint-cli2",
-				"markdown-toc",
-				"prettierd",
-				"stylua",
-				"sqlfmt",
-				"clang-format",
-				"ruff",
-			},
+			ensure_installed = tool_ensure,
+			run_on_start = false,
 		})
+
+		-- Single entry point for group installs/uninstalls.
+		stacks.setup_command()
 	end,
 }

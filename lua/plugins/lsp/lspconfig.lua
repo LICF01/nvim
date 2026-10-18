@@ -57,201 +57,197 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
-		-- configure html server
-		lsp.config("html", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "html", "ejs" },
-		})
+		-- Only configure servers whose stack is enabled on this machine
+		-- (:Stack install rust / web ...). Disabled stacks are skipped AND
+		-- explicitly disabled so they never attach.
+		local stacks = require("utils.lang-stacks")
 
-		-- Don't use tsserver if you are using typescript-tools.nvim
-		-- configure typescript server with plugin
-		-- lsp.config("ts_ls", {
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- })
-		--
-		lsp.config("vtsls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = {
-				"javascript",
-				"javascriptreact",
-				"javascript.jsx",
-				"typescript",
-				"typescriptreact",
-				"typescript.tsx",
+		local specs = {
+			-- configure html server
+			html = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = { "html", "ejs" },
 			},
-			settings = {
-				complete_function_calls = true,
-				vtsls = {
-					enableMoveToFileCodeAction = true,
-					autoUseWorkspaceTsdk = true,
-					experimental = {
-						maxInlayHintLength = 40,
-						completion = {
-							enableServerSideFuzzyMatch = true,
-							entriesLimit = 100, -- Critical: prevents lag
+
+			-- Don't use tsserver if you are using typescript-tools.nvim
+			-- configure typescript server with plugin
+			-- ts_ls = {
+			-- 	capabilities = capabilities,
+			-- 	on_attach = on_attach,
+			-- },
+
+			vtsls = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = {
+					"javascript",
+					"javascriptreact",
+					"javascript.jsx",
+					"typescript",
+					"typescriptreact",
+					"typescript.tsx",
+				},
+				settings = {
+					complete_function_calls = true,
+					vtsls = {
+						enableMoveToFileCodeAction = true,
+						autoUseWorkspaceTsdk = true,
+						experimental = {
+							maxInlayHintLength = 40,
+							completion = {
+								enableServerSideFuzzyMatch = true,
+								entriesLimit = 100, -- Critical: prevents lag
+							},
+						},
+					},
+					typescript = {
+						updateImportsOnFileMove = { enabled = "always" },
+						suggest = {
+							completeFunctionCalls = true,
+						},
+						inlayHints = {
+							enumMemberValues = { enabled = true },
+							functionLikeReturnTypes = { enabled = true },
+							parameterNames = { enabled = "literals" },
+							parameterTypes = { enabled = true },
+							propertyDeclarationTypes = { enabled = true },
+							variableTypes = { enabled = false }, -- disabled for performance
 						},
 					},
 				},
-				typescript = {
-					updateImportsOnFileMove = { enabled = "always" },
-					suggest = {
-						completeFunctionCalls = true,
-					},
-					inlayHints = {
-						enumMemberValues = { enabled = true },
-						functionLikeReturnTypes = { enabled = true },
-						parameterNames = { enabled = "literals" },
-						parameterTypes = { enabled = true },
-						propertyDeclarationTypes = { enabled = true },
-						variableTypes = { enabled = false }, -- disabled for performance
-					},
+			},
+
+			-- tsgo = {
+			-- 	capabilities = capabilities,
+			-- 	on_attach = on_attach,
+			-- },
+
+			tailwindcss = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
+
+			-- configure css server
+			cssls = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
+
+			-- configure emmet language server
+			emmet_language_server = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+				filetypes = {
+					"html",
+					"typescriptreact",
+					"javascriptreact",
+					"css",
+					"sass",
+					"scss",
+					"less",
+					"astro",
+					"ejs",
 				},
 			},
-		})
-		--
-		-- lsp.config("tsgo", {
-		-- 	capabilities = capabilities,
-		-- 	on_attach = on_attach,
-		-- })
 
-		-- configure css server
-		lsp.config("cssls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- configure prisma orm server
-		lsp.config("prismals", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- configure graphql language server
-		lsp.config("graphql", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-		})
-
-		-- configure emmet language server
-		lsp.config("emmet_language_server", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = {
-				"html",
-				"htmlangular",
-				"typescriptreact",
-				"javascriptreact",
-				"css",
-				"sass",
-				"scss",
-				"less",
-				"svelte",
-				"astro",
-				"ejs",
+			-- configure python server
+			pyright = {
+				capabilities = capabilities,
+				on_attach = on_attach,
 			},
-		})
 
-		-- configure python server
-		lsp.config("pyright", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+			-- configure astro server
+			astro = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
 
-		-- configure astro server
-		lsp.config("astro", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+			kotlin_language_server = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
 
-		lsp.config("kotlin_language_server", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+			marksman = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
 
-		lsp.config("marksman", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+			sqls = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
 
-		lsp.config("sqls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+			gopls = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
 
-		lsp.config("qmlls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-			cmd = { "qmlls", "-E" },
-		})
+			rust_analyzer = {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			},
 
-		lsp.config("clangd", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lsp.config("gopls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lsp.config("angularls", {
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- configure lua server (with special settings)
-		lsp.config("lua_ls", {
-			on_attach = on_attach,
-			on_init = function(client)
-				if client.workspace_folders then
-					local path = client.workspace_folders[1].name
-					if
-						path ~= vim.fn.stdpath("config")
-						and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-					then
-						return
+			-- configure lua server (with special settings)
+			lua_ls = {
+				on_attach = on_attach,
+				on_init = function(client)
+					if client.workspace_folders then
+						local path = client.workspace_folders[1].name
+						if
+							path ~= vim.fn.stdpath("config")
+							and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+						then
+							return
+						end
 					end
-				end
 
-				client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-					runtime = {
-						-- Tell the language server which version of Lua you're using (most
-						-- likely LuaJIT in the case of Neovim)
-						version = "LuaJIT",
-						-- Tell the language server how to find Lua modules same way as Neovim
-						-- (see `:h lua-module-load`)
-						path = {
-							"lua/?.lua",
-							"lua/?/init.lua",
+					client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+						runtime = {
+							-- Tell the language server which version of Lua you're using (most
+							-- likely LuaJIT in the case of Neovim)
+							version = "LuaJIT",
+							-- Tell the language server how to find Lua modules same way as Neovim
+							-- (see `:h lua-module-load`)
+							path = {
+								"lua/?.lua",
+								"lua/?/init.lua",
+							},
 						},
-					},
-					-- Make the server aware of Neovim runtime files
-					workspace = {
-						checkThirdParty = false,
-						library = {
-							vim.env.VIMRUNTIME,
-							-- Depending on the usage, you might want to add additional paths
-							-- here.
-							-- '${3rd}/luv/library'
-							-- '${3rd}/busted/library'
+						-- Make the server aware of Neovim runtime files
+						workspace = {
+							checkThirdParty = false,
+							library = {
+								vim.env.VIMRUNTIME,
+								-- Depending on the usage, you might want to add additional paths
+								-- here.
+								-- '${3rd}/luv/library'
+								-- '${3rd}/busted/library'
+							},
+							-- Or pull in all of 'runtimepath'.
+							-- NOTE: this is a lot slower and will cause issues when working on
+							-- your own configuration.
+							-- See https://github.com/neovim/nvim-lspconfig/issues/3189
+							-- library = {
+							--   vim.api.nvim_get_runtime_file('', true),
+							-- }
 						},
-						-- Or pull in all of 'runtimepath'.
-						-- NOTE: this is a lot slower and will cause issues when working on
-						-- your own configuration.
-						-- See https://github.com/neovim/nvim-lspconfig/issues/3189
-						-- library = {
-						--   vim.api.nvim_get_runtime_file('', true),
-						-- }
-					},
-				})
-			end,
-			settings = {
-				Lua = {},
+					})
+				end,
+				settings = {
+					Lua = {},
+				},
 			},
-		})
+		}
+
+		for name, cfg in pairs(specs) do
+			if stacks.lsp_enabled(name) then
+				lsp.config(name, cfg)
+				pcall(vim.lsp.enable, name, true)
+			else
+				-- make sure a previously-enabled server stays off
+				pcall(vim.lsp.enable, name, false)
+			end
+		end
 	end,
 }

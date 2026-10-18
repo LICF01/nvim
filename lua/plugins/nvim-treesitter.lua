@@ -12,48 +12,11 @@ return {
 			},
 		},
 		init = function()
-			-- ensure these language parsers are installed
-			local ensureInstalled = {
-				"angular",
-				"astro",
-				"bash",
-				"c",
-				"cpp",
-				"css",
-				"csv",
-				"diff",
-				"dockerfile",
-				"gitignore",
-				"go",
-				"graphql",
-				"html",
-				"javascript",
-				"jsdoc",
-				"json",
-				"kotlin",
-				"lua",
-				"luadoc",
-				"make",
-				"markdown",
-				"markdown_inline",
-				"nginx",
-				"php",
-				"prisma",
-				"python",
-				"qmljs",
-				"query",
-				"regex",
-				"scss",
-				"svelte",
-				"sql",
-				"tmux",
-				"toml",
-				"tsx",
-				"typescript",
-				"vim",
-				"vimdoc",
-				"yaml",
-			}
+			-- Parsers come from enabled stacks (:Stack install rust / web ...).
+			-- Only "core" is enabled by default; other stacks install on demand
+			-- so work vs. personal machines stay lean.
+			local stacks = require("utils.lang-stacks")
+			local ensureInstalled = stacks.collect("treesitter")
 			-- diff between already installed parsers and those that need to be installed
 			local alreadyInstalled = require("nvim-treesitter.config").get_installed()
 			local parsersToInstall = vim.iter(ensureInstalled)
@@ -88,8 +51,10 @@ return {
 
 			-- configure treesitter
 			treesitter.setup({
-				-- auto install above language parsers
-				auto_install = true,
+				-- parsers are managed per-stack via :Stack install <group>;
+				-- keep auto_install off so opening a file can't pull in a
+				-- stack you haven't enabled.
+				auto_install = false,
 				incremental_selection = {
 					enable = true,
 					keymaps = {

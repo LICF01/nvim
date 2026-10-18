@@ -7,14 +7,14 @@ return {
 	config = function()
 		local lint = require("lint")
 
-		lint.linters_by_ft = {
+		lint.linters_by_ft = require("utils.lang-stacks").filter_ft_map({
 			javascript = { "eslint_d" },
 			typescript = { "eslint_d" },
 			javascriptreact = { "eslint_d" },
 			typescriptreact = { "eslint_d" },
 			json = { "eslint_d", "biomejs" },
 			markdown = { "markdownlint-cli2" },
-		}
+		})
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
