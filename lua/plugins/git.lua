@@ -40,10 +40,7 @@ return {
 	},
 	{
 		"NeogitOrg/neogit",
-		dependencies = {
-			-- Only one of these is needed, not both.
-			"nvim-telescope/telescope.nvim",
-		},
+		-- Picker: auto-detected (snacks), no extra dependency needed.
 		config = true,
 		opts = {
 			graph_style = "kitty",

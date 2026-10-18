@@ -23,33 +23,6 @@ return {
 					hl.BlinkCmpMenu = {
 						bg = c.bg_dark,
 					}
-					hl.TelescopeNormal = {
-						bg = c.bg_dark,
-						fg = c.fg_dark,
-					}
-					hl.TelescopeBorder = {
-						bg = c.bg_dark,
-						fg = c.bg_dark,
-					}
-					hl.TelescopePromptNormal = {
-						bg = prompt,
-					}
-					hl.TelescopePromptBorder = {
-						bg = prompt,
-						fg = prompt,
-					}
-					hl.TelescopePromptTitle = {
-						bg = prompt,
-						fg = prompt,
-					}
-					hl.TelescopePreviewTitle = {
-						bg = c.bg_dark,
-						fg = c.bg_dark,
-					}
-					hl.TelescopeResultsTitle = {
-						bg = c.bg_dark,
-						fg = c.bg_dark,
-					}
 					-- hl.BlinkCmpMenu = {
 					-- 	bg = "none",
 					-- 	fg = c.fg_dark,
