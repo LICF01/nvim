@@ -4,7 +4,15 @@
 -- Enabled stacks persist per-machine in stdpath("data")/lang-stacks.json,
 -- so your personal and work computers can enable different stacks without
 -- editing (or commenting out) config.
+--
+-- Ownership: a formatter or linter (conform / nvim-lint name) is active only
+-- when an enabled stack lists it in `formatters` / `linters`. The filetype
+-- maps themselves live in plugins/formatting.lua and plugins/linting.lua.
 local M = {}
+
+local STATE_VERSION = 1
+-- Always enabled, whatever the state file says.
+local ALWAYS_ON = "core"
 
 -- stylua: ignorestart
 M.groups = {
@@ -30,8 +38,8 @@ M.groups = {
 		lsp = { "lua_ls", "marksman" },
 		tools = { "stylua", "markdownlint-cli2", "markdown-toc" },
 		dap = {},
-		-- filetypes whose formatter/linter entries belong to this stack
-		fts = { "lua", "markdown", "json", "jsonc", "yaml" },
+		formatters = { "stylua" },
+		linters = { "markdownlint-cli2" },
 	},
 	web = {
 		desc = "React / TypeScript / Astro",
@@ -55,23 +63,8 @@ M.groups = {
 		},
 		tools = { "prettierd", "eslint_d", "js-debug-adapter" },
 		dap = { "js", "firefox" },
-		fts = {
-			"javascript",
-			"javascriptreact",
-			"typescript",
-			"typescriptreact",
-			"vue",
-			"css",
-			"scss",
-			"less",
-			"html",
-			"json",
-			"jsonc",
-			"yaml",
-			"markdown",
-			"handlebars",
-			"astro",
-		},
+		formatters = { "prettierd", "prettier" },
+		linters = { "eslint_d", "biomejs" },
 	},
 	rust = {
 		desc = "Rust",
@@ -81,7 +74,7 @@ M.groups = {
 		lsp = { "rust_analyzer" },
 		tools = { "codelldb" },
 		dap = { "codelldb" },
-		fts = { "rust" },
+		formatters = { "rustfmt" },
 	},
 	go = {
 		desc = "Go",
@@ -89,7 +82,7 @@ M.groups = {
 		lsp = { "gopls" },
 		tools = {},
 		dap = { "delve" },
-		fts = { "go" },
+		formatters = { "gofmt" },
 	},
 	python = {
 		desc = "Python",
@@ -97,7 +90,7 @@ M.groups = {
 		lsp = { "pyright" },
 		tools = { "ruff" },
 		dap = { "python" },
-		fts = { "python" },
+		formatters = { "ruff_format" },
 	},
 	sql = {
 		desc = "SQL / data",
@@ -105,7 +98,7 @@ M.groups = {
 		lsp = { "sqls" },
 		tools = { "sqlfmt" },
 		dap = {},
-		fts = { "sql" },
+		formatters = { "sqlfmt" },
 	},
 	kotlin = {
 		desc = "Kotlin",
@@ -113,7 +106,6 @@ M.groups = {
 		lsp = { "kotlin_language_server" },
 		tools = {},
 		dap = {},
-		fts = { "kotlin" },
 	},
 }
 -- stylua: ignoreend
@@ -130,27 +122,46 @@ function M.list_groups()
 	return keys
 end
 
+-- Memoized enabled list. Reset by set_enabled().
+local cache
+
+-- State file formats: version 1 is {"version":1,"enabled":[...]}; the
+-- unversioned format was a bare array of group names and is still read.
+local function read_state()
+	local f = io.open(M.state_path(), "r")
+	if not f then
+		return nil
+	end
+	local raw = f:read("*a")
+	f:close()
+	local ok, decoded = pcall(vim.json.decode, raw)
+	if not ok or type(decoded) ~= "table" then
+		return nil
+	end
+	if vim.islist(decoded) then
+		return decoded
+	end
+	return decoded.enabled
+end
+
 function M.get_enabled()
-	local path = M.state_path()
-	local f = io.open(path, "r")
-	if f then
-		local raw = f:read("*a")
-		f:close()
-		local ok, decoded = pcall(vim.json.decode, raw)
-		if ok and type(decoded) == "table" then
-			-- validate against known groups
-			local valid = {}
-			for _, g in ipairs(decoded) do
-				if M.groups[g] and not vim.tbl_contains(valid, g) then
-					valid[#valid + 1] = g
-				end
-			end
-			if #valid > 0 then
-				return valid
+	if not cache then
+		local list = read_state()
+		if type(list) ~= "table" then
+			list = {}
+		end
+		local valid = {}
+		for _, g in ipairs(list) do
+			if M.groups[g] and not vim.tbl_contains(valid, g) then
+				valid[#valid + 1] = g
 			end
 		end
+		if not vim.tbl_contains(valid, ALWAYS_ON) then
+			table.insert(valid, 1, ALWAYS_ON)
+		end
+		cache = valid
 	end
-	return vim.deepcopy(M.defaults)
+	return vim.deepcopy(cache)
 end
 
 function M.set_enabled(groups)
@@ -164,19 +175,20 @@ function M.set_enabled(groups)
 			vim.notify("Stack: unknown group: " .. g, vim.log.levels.WARN)
 		end
 	end
-	if #valid == 0 then
-		valid = vim.deepcopy(M.defaults)
+	if not vim.tbl_contains(valid, ALWAYS_ON) then
+		valid[#valid + 1] = ALWAYS_ON
 	end
 	table.sort(valid)
 	local path = M.state_path()
 	vim.fn.mkdir(vim.fn.fnamemodify(path, ":h"), "p")
 	local f = io.open(path, "w")
 	if f then
-		f:write(vim.json.encode(valid))
+		f:write(vim.json.encode({ version = STATE_VERSION, enabled = valid }))
 		f:close()
 	else
 		vim.notify("Stack: could not write " .. path, vim.log.levels.ERROR)
 	end
+	cache = nil
 	return valid
 end
 
@@ -277,12 +289,6 @@ function M.dap_packages(groups)
 	return out
 end
 
--- DAP adapter names for mason-nvim-dap's ensure_installed.
--- (Groups store adapter names; use dap_packages() for mason-registry.)
-function M.dap_adapters(groups)
-	return M.collect("dap", groups)
-end
-
 -- Collect a deduplicated list of `key` ("treesitter"|"lsp"|"tools"|"dap")
 -- across the given groups (defaults to enabled groups).
 function M.collect(key, groups)
@@ -302,24 +308,47 @@ function M.collect(key, groups)
 	return out
 end
 
--- A filetype is active if ANY enabled group claims it in `fts`.
-function M.ft_active(ft)
+-- Set of formatter (or linter) names owned by the enabled stacks.
+-- `kind` is "formatters" or "linters".
+local function active_tools(kind)
+	local set = {}
 	for _, gname in ipairs(M.get_enabled()) do
-		local g = M.groups[gname]
-		if g and vim.tbl_contains(g.fts or {}, ft) then
-			return true
+		for _, name in ipairs(M.groups[gname][kind] or {}) do
+			set[name] = true
 		end
 	end
-	return false
+	return set
 end
 
--- Filter a { [ft] = ... } map (conform/lint) down to active filetypes.
-function M.filter_ft_map(full)
+-- Keep only the names in a conform / nvim-lint filetype entry that an enabled
+-- stack owns. Options such as stop_after_first and lsp_format are kept.
+-- Returns nil when nothing is left, so the filetype is dropped.
+local function filter_entry(entry, active)
 	local out = {}
-	for ft, v in pairs(full) do
-		if M.ft_active(ft) then
-			out[ft] = v
+	local kept = 0
+	for k, v in pairs(entry) do
+		if type(k) ~= "number" then
+			out[k] = v
 		end
+	end
+	for _, name in ipairs(entry) do
+		if active[name] then
+			kept = kept + 1
+			out[kept] = name
+		end
+	end
+	if kept > 0 then
+		return out
+	end
+end
+
+-- Filter a { [ft] = entry } map by tool ownership. `kind` is "formatters"
+-- or "linters".
+function M.filter_tool_map(full, kind)
+	local active = active_tools(kind)
+	local out = {}
+	for ft, entry in pairs(full) do
+		out[ft] = filter_entry(entry, active)
 	end
 	return out
 end
@@ -343,7 +372,7 @@ function M.disable(group)
 		vim.notify("Stack: unknown group: " .. group, vim.log.levels.WARN)
 		return M.get_enabled()
 	end
-	if group == "core" then
+	if group == ALWAYS_ON then
 		vim.notify("Stack: refusing to disable 'core'", vim.log.levels.WARN)
 		return M.get_enabled()
 	end
@@ -448,7 +477,7 @@ function M.uninstall(group)
 		vim.notify("Stack: unknown group: " .. group, vim.log.levels.WARN)
 		return
 	end
-	if group == "core" then
+	if group == ALWAYS_ON then
 		vim.notify("Stack: refusing to uninstall 'core'", vim.log.levels.WARN)
 		return
 	end
@@ -504,7 +533,7 @@ end
 -- Uninstall every enabled stack except core (keeps the essentials).
 function M.uninstall_all()
 	local enabled = vim.tbl_filter(function(g)
-		return g ~= "core"
+		return g ~= ALWAYS_ON
 	end, M.get_enabled())
 	if #enabled == 0 then
 		vim.notify("Stack: only core is enabled, nothing to uninstall", vim.log.levels.INFO)

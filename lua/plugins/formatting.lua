@@ -65,8 +65,9 @@ return {
 			},
 		},
 		opts = function()
-			-- Full canonical map; entries for disabled stacks are filtered
-			-- out so conform never calls a formatter you uninstalled.
+			-- Full map. A formatter is kept only if an enabled stack lists it
+			-- in `formatters` (utils/lang-stacks.lua), so conform never calls
+			-- a tool that isn't installed on this machine.
 			local full = {
 				lua = { "stylua" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -84,12 +85,13 @@ return {
 				markdown = { "prettierd", "prettier", stop_after_first = true },
 				-- markdown.mdx =  { "prettierd", "prettier", stop_after_first = true } ,
 				handlebars = { "prettierd", "prettier", stop_after_first = true },
-				python = { "ruff_format", "ruff_format", stop_after_first = true },
+				python = { "ruff_format" },
+				sql = { "sqlfmt" },
 				go = { "gofmt" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 			}
 			return {
-				formatters_by_ft = require("utils.lang-stacks").filter_ft_map(full),
+				formatters_by_ft = require("utils.lang-stacks").filter_tool_map(full, "formatters"),
 				format_on_save = {
 					timeout_ms = 500,
 					lsp_format = "never",
