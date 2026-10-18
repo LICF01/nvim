@@ -8,14 +8,16 @@ return {
 		local lint = require("lint")
 
 		-- A linter is kept only if an enabled stack lists it in `linters`.
-		lint.linters_by_ft = require("utils.lang-stacks").filter_tool_map({
+		local stacks = require("utils.lang-stacks")
+		local full = {
 			javascript = { "eslint_d" },
 			typescript = { "eslint_d" },
 			javascriptreact = { "eslint_d" },
 			typescriptreact = { "eslint_d" },
 			json = { "eslint_d", "biomejs" },
 			markdown = { "markdownlint-cli2" },
-		}, "linters")
+		}
+		lint.linters_by_ft = stacks.filter_tool_map(full, "linters")
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 

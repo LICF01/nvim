@@ -90,8 +90,9 @@ return {
 				go = { "gofmt" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 			}
+			local stacks = require("utils.lang-stacks")
 			return {
-				formatters_by_ft = require("utils.lang-stacks").filter_tool_map(full, "formatters"),
+				formatters_by_ft = stacks.filter_tool_map(full, "formatters"),
 				format_on_save = {
 					timeout_ms = 500,
 					lsp_format = "never",

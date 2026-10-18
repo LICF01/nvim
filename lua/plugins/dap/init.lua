@@ -54,8 +54,7 @@ return {
 			-- Enable virtual text
 			vim.g.dap_virtual_text = true
 
-			-- Each file in dap/configs is named after the stack it belongs to
-			-- (web.lua) and only runs while that stack is enabled.
+			-- dap/configs/<stack>.lua runs only while that stack is enabled.
 			local stacks = require("utils.lang-stacks")
 			for _, cfg_path in ipairs(vim.api.nvim_get_runtime_file("lua/plugins/dap/configs/*.lua", true)) do
 				local stack = vim.fn.fnamemodify(cfg_path, ":t:r")

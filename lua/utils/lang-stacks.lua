@@ -510,22 +510,42 @@ function M.uninstall(group)
 	M.disable(group)
 end
 
+-- What a group needs that is not installed yet: mason packages and
+-- treesitter parsers ("parser:<lang>").
+function M.missing(group)
+	local g = M.groups[group]
+	local missing = {}
+	local ok_reg, reg = pcall(require, "mason-registry")
+	if ok_reg then
+		for _, pkg in ipairs(M.owned_packages({ group })) do
+			if not reg.is_installed(pkg) then
+				missing[#missing + 1] = pkg
+			end
+		end
+	end
+	local ok_ts, ts = pcall(require, "nvim-treesitter.config")
+	if ok_ts then
+		local installed = ts.get_installed()
+		for _, parser in ipairs(g.treesitter or {}) do
+			if not vim.tbl_contains(installed, parser) then
+				missing[#missing + 1] = "parser:" .. parser
+			end
+		end
+	end
+	return missing
+end
+
 function M.status_lines()
 	local enabled = M.get_enabled()
 	local lines = { "Enabled stacks: " .. table.concat(enabled, ", ") }
 	for _, name in ipairs(M.list_groups()) do
-		local g = M.groups[name]
-		local mark = vim.tbl_contains(enabled, name) and "[x]" or "[ ]"
-		lines[#lines + 1] = string.format(
-			"%s %s - %s (parsers:%d lsp:%d tools:%d dap:%d)",
-			mark,
-			name,
-			g.desc or "",
-			#(g.treesitter or {}),
-			#(g.lsp or {}),
-			#(g.tools or {}),
-			#(g.dap or {})
-		)
+		local on = vim.tbl_contains(enabled, name)
+		lines[#lines + 1] = string.format("%s %s - %s", on and "[x]" or "[ ]", name, M.groups[name].desc or "")
+		if on then
+			local missing = M.missing(name)
+			lines[#lines + 1] = #missing == 0 and "    all installed"
+				or ("    missing: " .. table.concat(missing, ", "))
+		end
 	end
 	return lines
 end
@@ -619,7 +639,9 @@ function M.setup_command()
 			M.enable(target)
 		elseif action == "disable" and target then
 			M.disable(target)
-		elseif action == "list" or action == "status" or action == nil or action == "" then
+		elseif action == "list" or action == "status" then
+			vim.notify(table.concat(M.status_lines(), "\n"), vim.log.levels.INFO)
+		elseif action == nil or action == "" then
 			vim.notify(table.concat(M.status_lines(), "\n"), vim.log.levels.INFO)
 		else
 			vim.notify(
