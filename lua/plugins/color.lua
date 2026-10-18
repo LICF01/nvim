@@ -17,13 +17,13 @@ return {
 				require("oklch-color-picker").open_picker()
 			end,
 			desc = "Color",
-			{
-				"<leader>utc",
-				function()
-					require("oklch-color-picker").highlight.toggle()
-				end,
-				desc = "Color highlight",
-			},
+		},
+		{
+			"<leader>utc",
+			function()
+				require("oklch-color-picker").highlight.toggle()
+			end,
+			desc = "Color highlight",
 		},
 	},
 	---@type oklch.Opts
