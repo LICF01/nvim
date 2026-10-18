@@ -57,7 +57,7 @@ return {
 				function()
 					require("conform").format({
 						timeout_ms = 500,
-						lsp_fallback = true,
+						lsp_format = "fallback",
 					})
 				end,
 				mode = { "n", "v" },
@@ -92,7 +92,7 @@ return {
 				formatters_by_ft = require("utils.lang-stacks").filter_ft_map(full),
 				format_on_save = {
 					timeout_ms = 500,
-					lsp_fallback = false,
+					lsp_format = "never",
 				},
 			}
 		end,
