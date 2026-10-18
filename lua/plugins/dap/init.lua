@@ -5,13 +5,7 @@ return {
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
-			"jay-babu/mason-nvim-dap.nvim",
-			config = function()
-				-- Only ensure adapters for enabled stacks (:Stack install ...).
-				require("mason-nvim-dap").setup({
-					ensure_installed = require("utils.lang-stacks").collect("dap"),
-				})
-			end,
+			"jay-babu/mason-nvim-dap.nvim", -- setup() lives in plugins/lsp/mason.lua
 			"theHamsta/nvim-dap-virtual-text",
 		},
 		config = function()

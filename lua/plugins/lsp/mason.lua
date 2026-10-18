@@ -13,6 +13,7 @@ return {
 		local mason_lspconfig = require("mason-lspconfig")
 
 		local mason_tool_installer = require("mason-tool-installer")
+		local mason_nvim_dap = require("mason-nvim-dap")
 
 		local stacks = require("utils.lang-stacks")
 
@@ -35,17 +36,24 @@ return {
 		local lsp_ensure = stacks.collect("lsp")
 		local tool_ensure = stacks.collect("tools")
 
-		-- Disable automatic_installation so mason doesn't try to install
-		-- everything on startup.
+		-- automatic_enable = false: servers are enabled only by the explicit
+		-- list in lspconfig.lua, so a server installed by mason but not
+		-- owned by an enabled stack never attaches with default config.
 		mason_lspconfig.setup({
 			ensure_installed = lsp_ensure,
-			automatic_installation = false,
+			automatic_enable = false,
 		})
 
 		-- Don't run on start to avoid popups/long startup installs.
 		mason_tool_installer.setup({
 			ensure_installed = tool_ensure,
 			run_on_start = false,
+		})
+
+		-- Registers the DAP adapters of enabled stacks and the :DapInstall
+		-- commands. Without this call, mason-nvim-dap never runs.
+		mason_nvim_dap.setup({
+			ensure_installed = stacks.collect("dap"),
 		})
 
 		-- Single entry point for group installs/uninstalls.
