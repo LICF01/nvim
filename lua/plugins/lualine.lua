@@ -32,7 +32,7 @@ return {
 					{ "filetype" },
 				},
 			},
-			extensions = { "neo-tree", "lazy", "fzf" },
+			extensions = { "lazy", "fzf" },
 		})
 	end,
 }

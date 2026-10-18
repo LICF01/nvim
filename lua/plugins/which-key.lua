@@ -59,7 +59,6 @@ return {
 			{ "<leader>q", group = "session" },
 			{ "<leader>s", group = "search" },
 			{ "<leader>t", group = "tools" },
-			{ "<leader>tc", group = "CopilotChat" },
 			{ "<leader>T", group = "Test" },
 			{ "<leader>u", group = "ui" },
 			{ "<leader>ut", group = "toggle" },
