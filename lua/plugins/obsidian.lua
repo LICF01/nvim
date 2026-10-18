@@ -15,7 +15,8 @@ return {
 	},
 	opts = {
 		ui = { enable = false },
-		workspaces = {
+		-- Vaults differ per machine: override in lua/local.lua (see local.example.lua).
+		workspaces = require("utils.machine").obsidian_workspaces or {
 			{
 				name = "personal",
 				path = "~/Documents/notes/personal",

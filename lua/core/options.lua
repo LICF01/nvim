@@ -1,5 +1,6 @@
 local o = vim.o -- behaves like :set but with global scope
 local opt = vim.opt -- behaves like :set
+local machine = require("utils.machine")
 
 -- Following snippet from https://github.com/LunarVim/LunarVim/issues/1980
 -- If the current system shell or the `shell` option is set to /usr/bin/fish then revert to sh
@@ -12,7 +13,7 @@ end
 
 -- UI settings
 o.winborder = "rounded"
-opt.guifont = "JetBrainsMono NFM:h10"
+opt.guifont = machine.guifont or "JetBrainsMono NFM:h10"
 opt.termguicolors = true -- true color support
 opt.cursorline = true -- highlight the current line
 opt.number = true -- enable line numbers
