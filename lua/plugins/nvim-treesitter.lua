@@ -6,20 +6,6 @@ return {
 		cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
 		build = ":TSUpdate",
 		init = function()
-			-- Parsers come from enabled stacks (:Stack install rust / web ...).
-			-- Only "core" is enabled by default; other stacks install on demand
-			-- so work vs. personal machines stay lean.
-			local stacks = require("utils.lang-stacks")
-			local ensureInstalled = stacks.collect("treesitter")
-			-- diff between already installed parsers and those that need to be installed
-			local alreadyInstalled = require("nvim-treesitter.config").get_installed()
-			local parsersToInstall = vim.iter(ensureInstalled)
-				:filter(function(parser)
-					return not vim.tbl_contains(alreadyInstalled, parser)
-				end)
-				:totable()
-			require("nvim-treesitter").install(parsersToInstall)
-
 			vim.api.nvim_create_autocmd("FileType", {
 				callback = function()
 					local lang = vim.treesitter.language.get_lang(vim.bo.filetype)

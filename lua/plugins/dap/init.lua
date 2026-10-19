@@ -5,13 +5,17 @@ return {
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"nvim-neotest/nvim-nio",
-			"jay-babu/mason-nvim-dap.nvim", -- setup() lives in plugins/lsp/mason.lua
+			"jay-babu/mason-nvim-dap.nvim",
 			"theHamsta/nvim-dap-virtual-text",
 		},
 		config = function()
 			local dap = require("dap")
 			local dapui = require("dapui")
 			local dap_vt = require("nvim-dap-virtual-text")
+
+			-- Registers the :DapInstall commands and the adapter filetypes. It
+			-- installs nothing: adapters come from :Stack install <stack>.
+			require("mason-nvim-dap").setup({})
 
 			dap_vt.setup({
 				enabled = true, -- enable this plugin (the default)
@@ -86,6 +90,7 @@ return {
 	},
 	{
 		"leoluz/nvim-dap-go",
+		ft = "go",
 		config = function()
 			require("dap-go").setup()
 		end,

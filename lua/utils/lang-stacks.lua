@@ -510,29 +510,43 @@ function M.uninstall(group)
 	M.disable(group)
 end
 
--- What a group needs that is not installed yet: mason packages and
--- treesitter parsers ("parser:<lang>").
+-- What a group needs that is not installed yet, checked on disk so this
+-- doesn't load mason or nvim-treesitter. A mason package is installed when its
+-- folder exists under mason/packages; a parser when its .so is on the runtime path.
 function M.missing(group)
 	local g = M.groups[group]
 	local missing = {}
-	local ok_reg, reg = pcall(require, "mason-registry")
-	if ok_reg then
-		for _, pkg in ipairs(M.owned_packages({ group })) do
-			if not reg.is_installed(pkg) then
-				missing[#missing + 1] = pkg
-			end
+	local packages = vim.fn.stdpath("data") .. "/mason/packages/"
+	for _, pkg in ipairs(M.owned_packages({ group })) do
+		if not vim.uv.fs_stat(packages .. pkg) then
+			missing[#missing + 1] = pkg
 		end
 	end
-	local ok_ts, ts = pcall(require, "nvim-treesitter.config")
-	if ok_ts then
-		local installed = ts.get_installed()
-		for _, parser in ipairs(g.treesitter or {}) do
-			if not vim.tbl_contains(installed, parser) then
-				missing[#missing + 1] = "parser:" .. parser
-			end
+	for _, parser in ipairs(g.treesitter or {}) do
+		if #vim.api.nvim_get_runtime_file("parser/" .. parser .. ".so", false) == 0 then
+			missing[#missing + 1] = "parser:" .. parser
 		end
 	end
 	return missing
+end
+
+-- Once per start: list what the enabled stacks still need. Nothing is installed.
+function M.notify_missing()
+	local lines = {}
+	for _, g in ipairs(M.get_enabled()) do
+		local missing = M.missing(g)
+		if #missing > 0 then
+			lines[#lines + 1] = g .. ": " .. table.concat(missing, ", ")
+		end
+	end
+	if #lines > 0 then
+		vim.notify(
+			"Stack: not installed yet (nothing installs at startup):\n"
+				.. table.concat(lines, "\n")
+				.. "\nRun :Stack install <stack> to install them.",
+			vim.log.levels.INFO
+		)
+	end
 end
 
 function M.status_lines()
@@ -623,6 +637,12 @@ end
 
 -- Single user command: :Stack install|uninstall|enable|disable|list|status <group>
 function M.setup_command()
+	vim.api.nvim_create_autocmd("UIEnter", {
+		once = true,
+		callback = function()
+			vim.schedule(M.notify_missing)
+		end,
+	})
 	vim.api.nvim_create_user_command("Stack", function(opts)
 		local args = vim.split(opts.args, "%s+", { trimempty = true })
 		local action = args[1]
