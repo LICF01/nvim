@@ -50,17 +50,16 @@ Tab completion works for the subcommands and stack names.
 
 ### What happens at startup
 
-- Missing LSP servers, DAP adapters and treesitter parsers for the enabled stacks are installed
-  automatically in the background.
-- Formatter and linter tools are **not** installed at startup. `:Stack install` installs them.
-  If a formatter is missing, formatting for that filetype doesn't work until you run `:Stack install`.
+Nothing is installed at startup. If an enabled stack is missing packages or parsers, one message
+lists them and points to `:Stack install`. Until they're installed, that stack's servers, adapters
+and formatters don't work.
 
 ## New machine
 
 1. Clone the repo into `~/.config/nvim` and start Neovim. lazy.nvim installs the plugins.
 2. Copy the per-machine template and edit it: `cp lua/local.example.lua lua/local.lua`.
 3. Choose the stacks with `:Stack install <stack>`.
-4. Run `:Stack status` until nothing is listed as missing. Installs run in the background.
+4. Run `:Stack status` to see what is still missing. Installs run in the background.
 
 Example:
 

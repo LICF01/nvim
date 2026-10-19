@@ -28,14 +28,14 @@ docs/                     this documentation
    The leader key is set to `<Space>` in `keymaps.lua`, before any plugin loads.
 2. `core.lazy` clones lazy.nvim into `stdpath("data")/lazy` if it is missing, then imports
    `plugins`, `plugins/lsp` and `plugins/dap`. The update checker is enabled.
-3. Plugins with `lazy = false` load at startup: `snacks.nvim`, `tokyonight`, `blink.cmp`,
-   `mason.nvim`, `aerial.nvim`, `contextindent.nvim`, `vim-sleuth`, `nvim-dap-go`,
-   `nvim-tmux-navigation`, `nvim-web-devicons`.
+3. Plugins with `lazy = false` load at startup: `snacks.nvim`, `tokyonight`, `mason.nvim`,
+   `aerial.nvim`, `contextindent.nvim`, `vim-sleuth`, `nvim-web-devicons`. `contextindent.nvim`
+   also pulls in nvim-treesitter.
 4. Everything else loads on its trigger: an event (`BufReadPre`, `InsertEnter`, `VeryLazy`),
    a command, a filetype, or the first press of one of its keys. Use `:Lazy` to see them all.
 
-Startup also runs the stack setup: `mason-lspconfig`, `mason-nvim-dap` and nvim-treesitter
-install any missing packages and parsers for the enabled stacks (see [stacks.md](stacks.md)).
+Startup installs nothing. An enabled stack only registers its LSP servers, and one notice lists
+anything still missing (see [stacks.md](stacks.md)).
 
 ## Conventions
 
