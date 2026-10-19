@@ -1,17 +1,23 @@
+-- Loads on the first press of one of these keys, so it costs nothing at startup.
+local function nav(fn)
+	return function()
+		require("nvim-tmux-navigation")[fn]()
+	end
+end
+
 return {
 	"alexghergh/nvim-tmux-navigation",
+	keys = {
+		{ "<C-h>", nav("NvimTmuxNavigateLeft"), mode = "n", desc = "Move to left pane" },
+		{ "<C-j>", nav("NvimTmuxNavigateDown"), mode = "n", desc = "Move to lower pane" },
+		{ "<C-k>", nav("NvimTmuxNavigateUp"), mode = "n", desc = "Move to upper pane" },
+		{ "<C-l>", nav("NvimTmuxNavigateRight"), mode = "n", desc = "Move to right pane" },
+		{ "<C-\\>", nav("NvimTmuxNavigateLastActive"), mode = "n", desc = "Last active pane" },
+		{ "<C-Space>", nav("NvimTmuxNavigateNext"), mode = "n", desc = "Next pane" },
+	},
 	config = function()
-		local nvim_tmux_nav = require("nvim-tmux-navigation")
-
-		nvim_tmux_nav.setup({
+		require("nvim-tmux-navigation").setup({
 			disable_when_zoomed = true, -- defaults to false
 		})
-
-		vim.keymap.set("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-		vim.keymap.set("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-		vim.keymap.set("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-		vim.keymap.set("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-		vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
-		vim.keymap.set("n", "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
 	end,
 }

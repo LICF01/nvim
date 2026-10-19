@@ -3,6 +3,8 @@ return {
 		"saghen/blink.cmp",
 		-- use a release tag to download pre-built binaries
 		version = "1.*",
+		-- Loaded on the first insert or command-line entry, not at startup.
+		event = { "InsertEnter", "CmdlineEnter" },
 		dependencies = {
 			"giuxtaposition/blink-cmp-copilot",
 			"moyiz/blink-emoji.nvim",
