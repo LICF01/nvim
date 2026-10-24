@@ -1,5 +1,5 @@
 <h1 align="center">Neovim</h1>
-<p align="center">Personal Neovim config. The same repo runs on every machine: each one enables the language stacks it needs.</p>
+<p align="center">Personal Neovim config, kept in git so the same setup can be installed on any machine.</p>
 
 ![nvim](https://github.com/LICF01/nvim/assets/41651420/53b6a69a-ceea-416e-b94a-e4977853f486)
 
@@ -7,35 +7,55 @@
 
 ```sh
 git clone <this repo> ~/.config/nvim
-nvim                          # lazy.nvim installs the plugins
-cp lua/local.example.lua lua/local.lua   # optional: font and vaults for this machine
+nvim                                      # lazy.nvim installs the plugins on first start
+cp lua/local.example.lua lua/local.lua    # optional: font and Obsidian vaults for this machine
 ```
 
+## Structure
+
+```
+init.lua                entry point: keymaps, options, then lazy.nvim
+lua/core/               keymaps, options, lazy.nvim bootstrap
+lua/plugins/            one spec file per feature (lsp/ and dap/ are subfolders)
+lua/utils/              language stacks and per-machine settings
+lua/local.example.lua   template for lua/local.lua (git-ignored)
+docs/                   documentation
+```
+
+Plugins are loaded in the order `core` → `plugins` → `plugins/lsp` → `plugins/dap`. Most of them
+load on demand, on an event, a command, a filetype or their first key. The details are in
+[docs/structure.md](docs/structure.md).
+
+## Plugins
+
+About 70 plugins, including their dependencies. They cover completion, LSP, formatting and linting,
+treesitter, the UI, git, debugging, tests and Obsidian notes. 
+
+## Keymaps
+
+The leader key is `<Space>`. Press it and wait, and which-key lists what comes next. 
+
+## Optional: language stacks
+
+A stack is a set of tools for one language: treesitter parsers, LSP servers, formatters, linters and
+debug adapters. This is optional. Only `core` (the config language and markdown) is always on; every other stack is
+your choice. Use it only if you want a different set of tools on each machine. Stacks are saved per machine in
+`~/.local/share/nvim/lang-stacks.json`, which is not in the repo.
+
+- `:Stack status` shows what is still missing.
+- Nothing installs at startup. Packages install only through `:Stack install <stack>`.
+
+See [docs/stacks.md](docs/stacks.md) for the stacks, the commands and how to add one.
+
+## Per-machine settings
+
+Settings that differ between machines, such as the GUI font and the Obsidian vaults, go in
+`lua/local.lua`. That file is git-ignored. Copy `lua/local.example.lua` and edit it. A missing file
+keeps the defaults.
 
 ## Documentation
 
 | Document | Contents |
 |---|---|
-| [docs/stacks.md](docs/stacks.md) | language stacks: what each one contains, `:Stack` commands, new machines, adding a stack |
 | [docs/structure.md](docs/structure.md) | layout, load order, conventions, where state lives |
-
-## Layout
-
-```
-init.lua            entry point
-lua/core/           keymaps, options, lazy.nvim bootstrap
-lua/plugins/        one spec file per feature (lsp/ and dap/ are subfolders)
-lua/utils/          language stacks and per-machine settings
-lua/local.example.lua   template for lua/local.lua (git-ignored)
-docs/               documentation
-```
-
-## Per-machine setup
-
-Two things differ per machine, and neither is committed:
-
-- **Language stacks**, saved in `~/.local/share/nvim/lang-stacks.json`. Set them with `:Stack`.
-- **Settings** such as the GUI font and Obsidian vaults, in `lua/local.lua`.
-  Copy `lua/local.example.lua` and edit it.
-
-See [docs/stacks.md#new-machine](docs/stacks.md#new-machine) for the full steps.
+| [docs/stacks.md](docs/stacks.md) | language stacks: contents, `:Stack` commands, new machines, adding a stack |
