@@ -35,7 +35,17 @@ return {
 	},
 	{
 		"nvim-mini/mini.surround",
-		event = "VeryLazy",
+		-- Loads on the first surround key, not at startup. The keys are the
+		-- mappings below; lazy.nvim replays the key to the plugin's own mapping.
+		keys = {
+			{ "gsa", mode = { "n", "x" }, desc = "Add surrounding" },
+			{ "gsd", desc = "Delete surrounding" },
+			{ "gsf", desc = "Find surrounding (right)" },
+			{ "gsF", desc = "Find surrounding (left)" },
+			{ "gsh", desc = "Highlight surrounding" },
+			{ "gsr", desc = "Replace surrounding" },
+			{ "gsn", desc = "Update n_lines" },
+		},
 		opts = {
 			n_lines = 20,
 			mappings = {

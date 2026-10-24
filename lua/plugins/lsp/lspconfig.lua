@@ -9,8 +9,6 @@ return {
 	config = function()
 		local lsp = vim.lsp
 
-		local blink_cmp = require("blink.cmp")
-
 		local keymap = vim.keymap
 
 		local opts = { noremap = true, silent = true }
@@ -44,10 +42,16 @@ return {
 			-- end
 		end
 
-		-- used to enable autocompletion (assign to every lsp server config)
-		-- local capabilities = cmp_nvim_lsp.default_capabilities()
-		local capabilities = blink_cmp.get_lsp_capabilities()
-		capabilities.textDocument.completion.completionItem.snippetSupport = true
+		-- Completion capabilities from blink.cmp are merged into every server's
+		-- initialize request, when the server starts. Reading them here instead
+		-- would load blink.cmp (and LuaSnip, friendly-snippets) on every file open.
+		vim.lsp.config("*", {
+			before_init = function(params)
+				local blink_cmp = require("blink.cmp")
+				params.capabilities = vim.tbl_deep_extend("force", params.capabilities or {}, blink_cmp.get_lsp_capabilities())
+				params.capabilities.textDocument.completion.completionItem.snippetSupport = true
+			end,
+		})
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
@@ -72,7 +76,6 @@ return {
 		local specs = {
 			-- configure html server
 			html = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = { "html", "ejs" },
 			},
@@ -85,7 +88,6 @@ return {
 			-- },
 
 			vtsls = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = {
 					"javascript",
@@ -131,19 +133,16 @@ return {
 			-- },
 
 			tailwindcss = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			-- configure css server
 			cssls = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			-- configure emmet language server
 			emmet_language_server = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 				filetypes = {
 					"html",
@@ -160,38 +159,31 @@ return {
 
 			-- configure python server
 			pyright = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			-- configure astro server
 			astro = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			kotlin_language_server = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			marksman = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			sqls = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			gopls = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
 			rust_analyzer = {
-				capabilities = capabilities,
 				on_attach = on_attach,
 			},
 
