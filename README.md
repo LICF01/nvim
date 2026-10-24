@@ -71,6 +71,9 @@ The leader key is `<Space>`. These are the ones used most often:
 | `jk` | leave insert mode |
 | `<C-s>` | save |
 
+`<leader>sk` opens a searchable list of every keymap. 
+Plugins and their load state are in `:Lazy`.
+
 
 ## Language stacks
 
