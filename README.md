@@ -51,8 +51,7 @@ About 70 plugins, including their dependencies, grouped by what they're for:
 
 ## Keymaps
 
-The leader key is `<Space>`. Press it and wait, and which-key lists what comes next. These are the
-ones used most often:
+The leader key is `<Space>`. These are the ones used most often:
 
 | Keys | Action |
 |---|---|
@@ -72,14 +71,13 @@ ones used most often:
 | `jk` | leave insert mode |
 | `<C-s>` | save |
 
-Press `<leader>` and wait to see the rest (which-key).
 
-## Optional: language stacks
+## Language stacks
 
-A stack is a set of tools for one language: treesitter parsers, LSP servers, formatters, linters and
-debug adapters. This is optional. Only `core` (the config language and markdown) is always on; every other stack is
-your choice. Use it only if you want a different set of tools on each machine. Stacks are saved per machine in
-`~/.local/share/nvim/lang-stacks.json`, which is not in the repo.
+A set of tools I prefer for a particular language: treesitter parsers, LSP servers, formatters, linters and debug adapters.
+This is just because I'm too lazy to install everything when I switch machines and/or don't remember which ones I was using before.
+Only `core` (the config language and markdown) is always on.
+Stacks are saved per machine in `~/.local/share/nvim/lang-stacks.json`, which is not in the repo.
 
 - `:Stack status` shows what is still missing.
 - Nothing installs at startup. Packages install only through `:Stack install <stack>`.
@@ -88,9 +86,11 @@ See [docs/stacks.md](docs/stacks.md) for the stacks, the commands and how to add
 
 ## Per-machine settings
 
-Settings that differ between machines, such as the GUI font and the Obsidian vaults, go in
-`lua/local.lua`. That file is git-ignored. Copy `lua/local.example.lua` and edit it. A missing file
-keeps the defaults.
+Settings that differ between machines or that I change frequently but don't need them to be permanent go in `lua/local.lua`. 
+That file is git-ignored. Copy `lua/local.example.lua` and edit it. Every key is optional, and a missing file keeps the defaults:
+
+- `guifont` and `obsidian_workspaces`: the GUI font and the Obsidian vaults.
+- `shell` and `colorscheme`: the shell for `:!` and terminals, and the colour scheme.
 
 ## Documentation
 

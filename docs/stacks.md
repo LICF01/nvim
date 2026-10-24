@@ -1,11 +1,12 @@
 # Language stacks
 
 A **stack** groups what one language needs: treesitter parsers, LSP servers, mason tools,
-formatters and linters, and DAP adapters. Each machine enables the stacks it needs, so a work
-laptop can have web tooling and a personal laptop can have Rust and Go, from the same repo.
+formatters and linters, and DAP adapters. Each machine enables the stacks it needs, so my work
+laptop can have web tooling and my personal one may have Rust and Go, from the same repo without
+trying to make it permanent in the repo.
 
 The enabled set is stored per machine in `~/.local/share/nvim/lang-stacks.json`. It is not in
-the repo. `core` is always enabled.
+the repo. `core` is always enabled for basic stuff that I would like to have everywhere.
 
 ## Stacks
 
