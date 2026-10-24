@@ -30,7 +30,8 @@ return {
 				end,
 			})
 
-			vim.cmd([[colorscheme tokyonight-night]])
+			-- lua/local.lua can pick another scheme for this machine.
+			vim.cmd.colorscheme(require("utils.machine").colorscheme or "tokyonight-night")
 		end,
 	},
 	-- {

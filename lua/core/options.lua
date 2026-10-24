@@ -2,9 +2,12 @@ local o = vim.o -- behaves like :set but with global scope
 local opt = vim.opt -- behaves like :set
 local machine = require("utils.machine")
 
--- Following snippet from https://github.com/LunarVim/LunarVim/issues/1980
--- If the current system shell or the `shell` option is set to /usr/bin/fish then revert to sh
-if os.getenv("SHELL") == "/usr/bin/fish" or vim.opt.shell == "/usr/bin/fish" then
+-- lua/local.lua can set `shell` for this machine. Otherwise, following the
+-- snippet from https://github.com/LunarVim/LunarVim/issues/1980, fish is
+-- replaced by sh wherever fish is installed (matched by name, not path).
+if machine.shell then
+	vim.opt.shell = machine.shell
+elseif vim.fn.fnamemodify(os.getenv("SHELL") or "", ":t") == "fish" then
 	vim.opt.shell = "/bin/sh"
 else
 	-- Else default to the system current shell.

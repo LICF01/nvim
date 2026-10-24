@@ -9,4 +9,10 @@ return {
 	-- obsidian_workspaces = {
 	-- 	{ name = "personal", path = "~/Documents/notes/personal" },
 	-- },
+
+	-- Shell for :! commands and terminals (default: $SHELL, or sh when $SHELL is fish).
+	-- shell = "/bin/zsh",
+
+	-- Colour scheme (default: "tokyonight-night").
+	-- colorscheme = "tokyonight-night",
 }
