@@ -11,6 +11,18 @@ nvim                                      # lazy.nvim installs the plugins on fi
 cp lua/local.example.lua lua/local.lua    # optional: font and Obsidian vaults for this machine
 ```
 
+## Requirements
+
+| Tool | Why |
+|---|---|
+| Neovim 0.11 or newer | the config uses `vim.lsp.config` and `winborder` (0.12 is what it's tested on) |
+| git | lazy.nvim clones the plugins |
+| a C compiler and `tree-sitter-cli` | nvim-treesitter compiles its parsers |
+| Node.js | Copilot's language server runs on Node |
+| ripgrep (`rg`) | grep and file search in the snacks picker |
+| tmux | the sidekick backend and moving between tmux panes |
+| a Nerd Font | icons; the default font is JetBrainsMono NFM |
+
 ## Structure
 
 ```
@@ -22,18 +34,45 @@ lua/local.example.lua   template for lua/local.lua (git-ignored)
 docs/                   documentation
 ```
 
-Plugins are loaded in the order `core` → `plugins` → `plugins/lsp` → `plugins/dap`. Most of them
-load on demand, on an event, a command, a filetype or their first key. The details are in
-[docs/structure.md](docs/structure.md).
+How the files load, and which plugins load at startup, is in [docs/structure.md](docs/structure.md).
 
 ## Plugins
 
-About 70 plugins, including their dependencies. They cover completion, LSP, formatting and linting,
-treesitter, the UI, git, debugging, tests and Obsidian notes. 
+About 70 plugins, including their dependencies, grouped by what they're for:
+
+- **Completion and AI:** blink.cmp, Copilot, sidekick
+- **LSP, formatting and linting:** nvim-lspconfig, mason, conform, nvim-lint
+- **Editing and treesitter:** nvim-treesitter, mini.nvim, flash, Comment.nvim
+- **UI:** snacks, tokyonight, lualine, noice, which-key
+- **Git:** gitsigns, neogit, codediff
+- **Notes and markdown:** obsidian.nvim, markdown-preview, render-markdown
+- **Debugging, tests and databases:** nvim-dap, neotest, vim-dadbod
+
 
 ## Keymaps
 
-The leader key is `<Space>`. Press it and wait, and which-key lists what comes next. 
+The leader key is `<Space>`. Press it and wait, and which-key lists what comes next. These are the
+ones used most often:
+
+| Keys | Action |
+|---|---|
+| `<leader><leader>` | switch buffer |
+| `<leader>ff` | find files |
+| `<leader>/` | grep the project |
+| `<leader>fe` | file explorer |
+| `<leader>gg` | lazygit |
+| `]h` / `[h` | next / previous git hunk |
+| `<leader>cd` | go to definition |
+| `<leader>cr` | rename (when a language server is attached) |
+| `<leader>ca` | code actions |
+| `<leader>cf` | format the file or selection |
+| `<leader>xa` | all diagnostics |
+| `<leader>dc` | start or continue debugging |
+| `<leader>sr` | search and replace |
+| `jk` | leave insert mode |
+| `<C-s>` | save |
+
+Press `<leader>` and wait to see the rest (which-key).
 
 ## Optional: language stacks
 
